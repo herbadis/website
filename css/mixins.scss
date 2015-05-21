@@ -1,0 +1,34 @@
+/*
+ * MIXINS
+ * ================================================
+ */
+
+@mixin _animation($animationName, $duration, $delay) {
+  -webkit-animation: $animationName;
+  -moz-animation: $animationName;
+  animation: $animationName;
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  animation-duration: $duration;
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  animation-delay: $delay;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@mixin _keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}

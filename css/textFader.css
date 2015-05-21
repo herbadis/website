@@ -1,0 +1,60 @@
+@font-face {
+	font-family: 'helveticaNeue';
+	src: url(../assets/fonts/HelveticaNeueLTPro-UltLtEx.otf);
+}
+
+#textFader {
+	margin-bottom: 20px;
+}
+
+@media(max-width: 768px) {
+	#textFader {
+		margin-bottom: 0px;
+	}
+}
+
+@media(max-width: 480px) {
+	#textFader {
+		border-radius: 0px;
+		display: inline ;
+		width: 32px;
+	}
+}
+
+#textFader h1 {
+	color: #ffffff;
+	display: none;
+	font-family:  'helveticaNeue';
+	font-size: 140px;
+	font-weight: 200;
+	width: 100%;
+	overflow: hidden;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+	letter-spacing: 20px;
+	text-align: center;
+}
+
+/* "rebuilt in animation.js"
+@media(min-width: 480px) {
+	#textFader h1 {
+		animation: textResizeLarge linear 0.45s;
+		-webkit-animation: textResizeLarge linear 0.45s;
+		-moz-animation: textResizeLarge linear 0.45s;
+		-o-animation: textResizeLarge linear 0.45s;
+	}
+}
+*/
+
+@media(max-width : 480px) {
+	#textFader h1 {
+		font-size: 80px;
+		margin: 0px 10px;
+	/*	animation: textResizeLarge linear 0.45s;
+		-webkit-animation: textResizeSmall linear 0.45s;
+		-moz-animation: textResizeSmall linear 0.45s;
+		-o-animation: textResizeLarge linear 0.45s;
+	*/
+	}
+}
