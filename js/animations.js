@@ -47,7 +47,25 @@ $(window).resize(function() {
 	// Get ID 'videoBackgroundContainer'
 	var videoElement = document.getElementById('videoBackgroundContainer');
 
+	if (videoElement) {
+		// Required for modern autoplay policies in Safari/Chrome
+		videoElement.muted = true;
+		videoElement.setAttribute('muted', '');
+		videoElement.setAttribute('playsinline', '');
+
+		var initialPlay = videoElement.play();
+		if (initialPlay && initialPlay.catch) {
+			initialPlay.catch(function () {
+				// Ignore autoplay rejections; poster image remains as fallback
+			});
+		}
+	}
+
 	document.addEventListener('visibilitychange', function() {
+		if (!videoElement) {
+			return;
+		}
+
 		// Pause background video when page is hidden
 		if (document.hidden) {     
 		$('#videoBackgroundContainer').animate({volume: 0}, 1000, 'linear', function() {
@@ -55,7 +73,12 @@ $(window).resize(function() {
 	});
 		// Play background video when page is shown
 		} else {
-		videoElement.play();  
+		var resumePlay = videoElement.play();
+		if (resumePlay && resumePlay.catch) {
+			resumePlay.catch(function () {
+				// Keep silent if playback is still blocked
+			});
+		}
 		$('#videoBackgroundContainer').animate({volume: 1}, 1000, 'linear');
 		} 
 	});
