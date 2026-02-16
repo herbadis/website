@@ -7,8 +7,11 @@ body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 200;
 	height: 100%;
+	isolation: isolate;
 	margin: 0;
 	max-width: 100%;
+	overflow-x: hidden;
+	position: relative;
 }
 
 @media(max-width: 480px) {
@@ -33,7 +36,7 @@ a:focus-visible {
 	position: relative;
 	text-align: center;
 	width: 100%;
-	z-index: 1;
+	z-index: 10;
 }
 
 @media(max-width: 1200px) {
@@ -80,11 +83,17 @@ a:focus-visible {
 }
 
 #headline {
-	animation: contentFadeIn 0.8s ease 0.45s forwards;
 	color: #ffffff;
 	display: inline-block;
 	font-size: 30px;
-	opacity: 0;
+	opacity: 1;
+}
+
+@supports (animation-name: contentFadeIn) {
+	#headline {
+		animation: contentFadeIn 0.8s ease 0.45s forwards;
+		opacity: 0;
+	}
 }
 
 @media(max-width: 768px) {
@@ -100,10 +109,16 @@ a:focus-visible {
 }
 
 #socialMedia {
-	animation: contentFadeIn 0.8s ease 0.7s forwards;
 	margin: 0;
-	opacity: 0;
+	opacity: 1;
 	padding: 0;
+}
+
+@supports (animation-name: contentFadeIn) {
+	#socialMedia {
+		animation: contentFadeIn 0.8s ease 0.7s forwards;
+		opacity: 0;
+	}
 }
 
 #socialMedia li {
@@ -141,16 +156,13 @@ a:focus-visible {
 }
 
 #videoBackgroundContainer {
-	background-size: cover;
-	bottom: 0;
-	height: auto;
-	min-height: 100%;
-	min-width: 100%;
+	height: 100vh;
+	inset: 0;
 	object-fit: cover;
+	pointer-events: none;
 	position: fixed;
-	right: 0;
-	width: auto;
-	z-index: 0;
+	width: 100vw;
+	z-index: -1;
 }
 
 @media(max-width: 480px) {

@@ -20,21 +20,28 @@
 }
 
 #textFader h1 {
-	animation: headingReveal 2s ease forwards;
 	color: #ffffff;
 	display: block;
-	filter: blur(8px);
+	filter: none;
 	font-family:  'helveticaNeue';
 	font-size: clamp(80px, 12vw, 140px);
 	font-weight: 200;
 	letter-spacing: clamp(8px, 1.6vw, 20px);
 	margin: 0;
-	opacity: 0;
+	opacity: 1;
 	overflow: hidden;
 	padding: 0;
 	text-align: center;
 	text-transform: uppercase;
 	width: 100%;
+}
+
+@supports (animation-name: headingReveal) {
+	#textFader h1 {
+		animation: headingReveal 2s ease forwards;
+		filter: blur(8px);
+		opacity: 0;
+	}
 }
 
 @media(max-width : 480px) {
