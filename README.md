@@ -27,12 +27,12 @@ python3 scripts/sync_discogs_collection.py \
   --output recordList.discogs-demo.html
 ```
 
-## AWS Scheduled Sync
+## Upload To S3 (Manual)
 
-If you deploy as a static site on AWS, use the included serverless setup:
+After generating `recordList.html`, upload these from the repo root to your S3 bucket:
 
-- Template: `aws/template.yaml`
-- Lambda code: `aws/lambda/`
-- Deployment guide: `aws/README.md`
-
-This runs a scheduled backend sync (EventBridge -> Lambda -> S3) so your frontend stays static and your Discogs token remains private in Secrets Manager.
+- `index.html`
+- `recordList.html`
+- `css/`
+- `assets/`
+- `js/` (if you add JS files later)
