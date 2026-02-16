@@ -2,98 +2,195 @@
 
 <html lang="en">
 <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Record List</title>
 <style>
-body {
-	background-color: #1d1d1f;
-	color: #ffffff;
-	font-size: 16px;
-	width: 100%;
-}
-
 @font-face {
 	font-family: 'helveticaNeue';
 	src: url(assets/fonts/HelveticaNeueLTPro-UltLtEx.otf);
 }
 
-ul {
-	height: 50%;
-	margin: auto;
-	overflow: auto;
-	position: absolute;
-	top: 0; left: 0; bottom: 0; right: 0;
-	width: 50%;
+:root {
+	--bg: #17171a;
+	--panel: rgba(36, 36, 41, 0.92);
+	--text: #ffffff;
+	--muted: #c5c5cc;
+	--accent: #00d9d9;
+	--line: rgba(255, 255, 255, 0.24);
 }
 
-li {
-	color: #ffffff;
-	font-size: 16px;
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background:
+		radial-gradient(circle at top left, #2b2b31 0%, transparent 45%),
+		radial-gradient(circle at bottom right, #141417 0%, transparent 40%),
+		var(--bg);
+	color: var(--text);
+	font-family: 'helveticaNeue', "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0;
+	min-height: 100vh;
+}
+
+.record-list-page {
+	align-items: stretch;
+	display: flex;
+	justify-content: center;
+	min-height: 100vh;
+	padding: clamp(16px, 3vw, 36px);
+}
+
+.record-list-panel {
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
+	overflow: hidden;
+	width: min(1080px, 100%);
+}
+
+.record-list-header {
+	border-bottom: 1px solid var(--line);
+	padding: clamp(16px, 2.8vw, 26px);
+	text-align: center;
+}
+
+.record-list-header h1 {
+	font-size: clamp(20px, 3vw, 30px);
+	font-weight: 200;
+	letter-spacing: 0.14em;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.record-list {
 	list-style: none;
 	margin: 0;
+	max-height: calc(100vh - 180px);
+	overflow: auto;
+	padding: 18px clamp(16px, 2.5vw, 30px) 28px;
+}
+
+.record-list li {
+	color: var(--text);
+	font-size: clamp(12px, 1.15vw, 16px);
+	line-height: 1.5;
+	transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
+	color: var(--accent);
+	transform: translateX(12px);
+}
+
+.record-list .section-heading {
+	font-size: clamp(13px, 1.4vw, 18px);
+	letter-spacing: 0.06em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.record-list .section-heading strong {
+	font-weight: 400;
+}
+
+.record-list .meta {
+	color: var(--muted);
+	font-size: clamp(12px, 1.1vw, 15px);
+	margin: 0;
+	text-align: center;
+}
+
+.record-list .divider {
+	border-top: 1px solid var(--line);
+	height: 0;
+	margin: 10px auto 12px;
+	padding: 0;
+	width: min(460px, 100%);
+}
+
+.record-list .spacer {
+	height: 10px;
+	padding: 0;
 }
 
 @media(max-width: 768px) {
-	li {
-		font-size: 13px;
+	.record-list {
+		max-height: none;
+	}
+
+	.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
+		transform: none;
 	}
 }
 
-@media(max-width: 480px) {
-	li {
-		font-size: 10px;
+@media (hover: none) {
+	.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
+		color: var(--text);
+		transform: none;
 	}
 }
 
-p {
-	margin: 0;
-	text-align: center;
+@media (prefers-reduced-motion: reduce) {
+	.record-list li {
+		transition: none;
+	}
 }
 </style>
 </head>
 <body>
-<ul>
-	<p><strong>Last Updated: 9/11/14</strong></p>
-	<p><strong>All vinyl is black unless otherwise noted.</strong></p>
-	<br>
-	<p>5&quot;-7&quot; : 223</p>
-	<p>8&quot;-11&quot; : 10</p>
-	<p>12&quot; : 135</p>
-	<br>
-	<hr>
-	<br>
-	<p><strong>5&quot;</strong></p>
-	<br>
-	<li>Altars &amp; Issei Sagawa / Split (Out of 130) / How Much Art Can You Take?</li>
-	<br>
-	<p><strong>7&quot;</strong><p>
-	<br>
-	<li>86 Mentality / ST / Grave Mistake</li>
-	<li>86 Mentality / On The Loose / Grave Mistake</li>
-	<li>86 Mentality / Final Exit / Deranged</li>
-	<!--<li>9 Shocks Terror / ST (Out of 100) / Even Worse</li>-->
-	<!--<li>9 Shocks Terror / Mobile Terror Unit / Green Marble / Havoc</li>-->
-	<!--<li>9 Shocks Terror &amp; Devoid of Faith / Split / Grey / Gloom</li>-->
-	<!--<li>9 Shocks Terror &amp; The Killers / Split / Orange Marble / Gloom</li>-->
-	<br>
-	<li>A.D. Nauseam / BrainStorm / Flicknife</li>
-	<li>Adolescents / Amoeba / Blue, One-Sided with Etchings on B Side / Posh Boy</li>
-	<li>Adolescents / Welcome to Reality / Frontier</li>
-	<li>Aerosols / Medicine (Out of 200) / Coke Bottle Clear / Youth Attack</li>
-	<li>Agent Orange / Everything Turns Gray (Heavy Sleeve Paper) / Posh Boy</li>
-	<li>Agent Orange / VD - Hello Boy Friend, Coming MY Way? / New Wave </li>
-	<li>Altars / Das Vergewaltigte (Out of 300) / Clear Red with Hand Etchings / Youth Attack</li>
-	<li>Ashpool / Black Bondage in the North (Out of 500) / Paragon</li>
-	<li>Ashpool / Saturns Slave / Clear Blue / Hospital</li>
-	<li>Ashpool / Saturns Slave (Store Only Copy Out of 100) / Clear / Hospital</li>
-	<li>The Avengers / We Are The One (2nd Press) / Blue / DangerHouse</li>
-	<br>
-	<li>Bone Awl / ...So, I Must Take From the Earth (Out of 300) / Double 7 &quot; / Hospital</li>
-	<li>Bone Awl / Undying Glare / Nuclear War Now</li>
-	<li>Born Against / ST / Vermiform</li>
-	<li>Born Against &amp; Universal Order of Armageddon / Split / Gravity</li>
-	<li>Brain Handle / Smiling (Third Press Out of 500) / Iron Lung</li>
-	<!--<li>Breathing Fire / ST (Out of 544) / PainKillerBroken Bones / Decapitated / Fall Out</li>-->
-	<li>Broken Bones / Decapitated / Fall Out</li>
-	<br>
+<main class="record-list-page">
+	<section class="record-list-panel" aria-label="Record collection">
+		<header class="record-list-header">
+			<h1>Record List</h1>
+		</header>
+		<ul class="record-list">
+			<li class="section-heading"><strong>Last Updated: 9/11/14</strong></li>
+			<li class="section-heading"><strong>All vinyl is black unless otherwise noted.</strong></li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li class="meta">5&quot;-7&quot; : 223</li>
+			<li class="meta">8&quot;-11&quot; : 10</li>
+			<li class="meta">12&quot; : 135</li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li class="divider" role="separator" aria-hidden="true"></li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li class="section-heading"><strong>5&quot;</strong></li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li>Altars &amp; Issei Sagawa / Split (Out of 130) / How Much Art Can You Take?</li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li class="section-heading"><strong>7&quot;</strong></li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li>86 Mentality / ST / Grave Mistake</li>
+			<li>86 Mentality / On The Loose / Grave Mistake</li>
+			<li>86 Mentality / Final Exit / Deranged</li>
+			<!--<li>9 Shocks Terror / ST (Out of 100) / Even Worse</li>-->
+			<!--<li>9 Shocks Terror / Mobile Terror Unit / Green Marble / Havoc</li>-->
+			<!--<li>9 Shocks Terror &amp; Devoid of Faith / Split / Grey / Gloom</li>-->
+			<!--<li>9 Shocks Terror &amp; The Killers / Split / Orange Marble / Gloom</li>-->
+			<li class="spacer" aria-hidden="true"></li>
+			<li>A.D. Nauseam / BrainStorm / Flicknife</li>
+			<li>Adolescents / Amoeba / Blue, One-Sided with Etchings on B Side / Posh Boy</li>
+			<li>Adolescents / Welcome to Reality / Frontier</li>
+			<li>Aerosols / Medicine (Out of 200) / Coke Bottle Clear / Youth Attack</li>
+			<li>Agent Orange / Everything Turns Gray (Heavy Sleeve Paper) / Posh Boy</li>
+			<li>Agent Orange / VD - Hello Boy Friend, Coming MY Way? / New Wave </li>
+			<li>Altars / Das Vergewaltigte (Out of 300) / Clear Red with Hand Etchings / Youth Attack</li>
+			<li>Ashpool / Black Bondage in the North (Out of 500) / Paragon</li>
+			<li>Ashpool / Saturns Slave / Clear Blue / Hospital</li>
+			<li>Ashpool / Saturns Slave (Store Only Copy Out of 100) / Clear / Hospital</li>
+			<li>The Avengers / We Are The One (2nd Press) / Blue / DangerHouse</li>
+			<li class="spacer" aria-hidden="true"></li>
+			<li>Bone Awl / ...So, I Must Take From the Earth (Out of 300) / Double 7 &quot; / Hospital</li>
+			<li>Bone Awl / Undying Glare / Nuclear War Now</li>
+			<li>Born Against / ST / Vermiform</li>
+			<li>Born Against &amp; Universal Order of Armageddon / Split / Gravity</li>
+			<li>Brain Handle / Smiling (Third Press Out of 500) / Iron Lung</li>
+			<!--<li>Breathing Fire / ST (Out of 544) / PainKillerBroken Bones / Decapitated / Fall Out</li>-->
+			<li>Broken Bones / Decapitated / Fall Out</li>
+			<li class="spacer" aria-hidden="true"></li>
 	<li>Career Suicide / ST / Kangaroo</li>
 	<li>Career Suicide / Sars (Silk Screened logo on Cover Out of 1500) / Deranged</li>
 	<li>Career Suicide / Signals / Picture Disk (Out of 1000) / Even Worse &amp; Way Back When</li>
@@ -114,7 +211,7 @@ p {
 	<li>Crow / ST / Prank</li>
 	<li>Cult Ritual / ST / Green Marble / Burrito</li>
 	<li>Cult Ritual / 2nd (Second Press Out of 500) Youth Attack</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Dead Kennedy&apos;s / Holiday in Cambodia; Police Truck / I.R.S.</li>
 	<li>Dead Kennedy&apos;s / Nazi Punk Fuck Off (Armband Included) / Alternative Tentacle</li>
 	<li>Deep Wound / ST / RadioBeat</li>
@@ -168,7 +265,7 @@ p {
 	<!--<li>Double Negative / Hardcore Confusion Vol. 2 / Orange Marble / Sorry State</li>-->
 	<li>Dust Heads / Tall Tails / White / Don Giovanni</li>
 	<li>Dust Heads / Tall Tails 2 / White / Don Giovanni</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Easter Kids / ST / Brain Drain</li>
 	<!--<li>Easter Kids / ST / White / Brain Drain</li>
 	<li>Easter Kids / ST / White and Grey / Brain Drain</li>
@@ -182,7 +279,7 @@ p {
 	<li>EyeHateGod &amp; Anal Cunt / In These Black Days: A Tribute to Black Sabbath Vol.1 / Hydra Head</li>
 	<li>EyeHateGod &amp; Cripple Bastards / I am the Gestapo / Southern Lord</li>
 	<li>EyeHateGod / 99 Miles of Bad Road / 2+2=5</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>F / Mess You Up / Green / Super Seven &amp; Thrash &amp; Bootleg &amp; Ghetto-Way &amp; Mystic</li>
 	<li>F / Four from '84 / Grey Marble / Burrito</li>
 	<li>F.O.D. / Love Songs / Speed of Sound</li>
@@ -193,11 +290,11 @@ p {
 	<li>Formaldehyde Junkies / Are a Total Wreak / Underestimated</li>
 	<li>Formaldehyde Junkies / ST / Fashionable Idiots</li>
 	<li>Front Line / Basic Training / Beach Impediment</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Gauze / Low Charge / White / Prank</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Hated Youth / Hardcore Rules / BurritoHeavy Cream / ST / Purple Marble / Infinity Cat</li>
-	<li>Heavy Cream / ST / Infinity Cat Recordings
+		<li>Heavy Cream / ST / Infinity Cat Recordings</li>
 	<li>Hoax / ST / Katorga Works &amp; Deranged</li>
 	<li>Hoax / 2nd ep / Youth Attack</li>
 	<li>Hoax / 2nd ep / Clear / Youth Attack</li>
@@ -205,7 +302,7 @@ p {
 	<li>HomoStupids / The Brutal Birthday / Richie</li>
 	<li>HomoStupids / The Edge (Orange Cover Out of 72) / Radio 81 &amp; P.Trash</li>
 	<li>HomoStupids / Cat Music / Fasionable Idiots</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Icon A.D. / Don't Feed Us Shit / Radical ChangeIggy Pop and the Stooges / Search and Destroy / Sundazed</li>
 	<li>Iggy and The Stooges / Search and Destroy / Sundazed Music &amp; Sony BMG Music Entertainment</li>
 	<li>Iron Lung / Demonstrations / 625 Thrashcore </li>
@@ -214,16 +311,16 @@ p {
 	<li>Iron Lung &amp; Agents of Abhorrence / Silent Decay (Yellow Cover Out of 400) / Purple &amp; White / Missing Link</li>
 	<li>Iron Lung / Cancer (Out of 524) / Iron Lung <strong>x2</strong></li>
 	<li>Iron Lung / Exposed (Shows Only Out of 500) / Iron Lung</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>J.F.A. / Blatant Localism (Second Press) / Placebo</li>
 	<li>Judge / New York Crew (Yellow Labels Out of 1000) / Schism</li>
 	<li>Judge / New York Crew (Yellow Glossy Sleeve) / Revelation</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Let Down / ST / Grey Marble / Doppelganger</li>
 	<li>Let Down / ST / Coke Bottle Clear / Doppelganger</li>
 	<li>Let Down / Crossed Off (Tour Press) / Green Marble / Dead By 23</li>
 	<li>Let Down / Crossed Off (This is Hardcore Press) / Blue / Dead by 23</li>
-	<li>Let Down / Crossed Off (Tour Press Sliver Eye) / Clear Red / Dead by 23
+		<li>Let Down / Crossed Off (Tour Press Sliver Eye) / Clear Red / Dead by 23</li>
 	<li>Let Down / Sacrifice Me ( Pre Order Out of 105) / Six Feet Under</li>
 	<li>Look Back and Laugh &amp; DropDead / Split / Armageddon</li>
 	<li>Look Back and Laugh / State of Illusion / Self-Released</li>
@@ -232,7 +329,7 @@ p {
 	<li>Loser Life / Things Will Never Change (Second Press of 300) / Going Underground</li>
 	<li>Loser Life / I Want the World / Lifes A Rape</li>
 	<li>Loser Life / I Want the World / White / Lifes A Rape</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Men's Recovery Project / Emergency Record / Organ &amp; Lungcast</li>
 	<li>Men's Recovery Project / Make a Baby / Vermiform</li>
 	<li>Men's Recovery Project / Normal man / Gravity</li>
@@ -243,22 +340,22 @@ p {
 	<li>Mission For Christ / Pennies From Hell / No TrendMobs / Diabolism / Noise Room <strong>2</strong></li>
 	<li>Mobs / Diabolism / Noise Room <strong>2</strong></li>
 	<li>Murder-Suicide / Lobotomy Kit / Grey Marble / Burrito</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Nazi Dust / ST (Out of 500) / Orange / Youth Attack</li>
 	<li>The Neos / End All Discrimination (Out of 500, Green Cover) / Alandhiscar</li>
 	<li>The Neos / Hassiban Gets The Martian Brain Squeeze (2nd Press) / Ratcage</li>
 	<li>Nig Heist / Walking Down The Street / ThermidorNo Trend / Teen Love / No Trend</li>
 	<li>No Trend / Teen Love / No Trend</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Oath, The / ST / Youth Attack &amp; Coalition &amp; Gloom</li>
 	<li>Oath, The &amp; Total Fury / Ears Go Deaf Tour 2002 (Japanese Tour Press) / Mangrove</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Pandemonium / Who The Fuck Are You? (First Cover Out of 50) / Red / Noise and Distortion</li>
 	<li>Pandemonium / Who The Fuck Are You? (Second Cover Out of 50) / Red / Noise and Distortion</li>
 	<li>Perfume Rive / No Wind (Out of 250) / Clear Flexi / Symphony of Destruction</li>
 	<li>Poison Idea / Darby Crash Rides Again (3rd Press) / American Leather</li>
 	<li>Putrid Fever / ST / Belfagor</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Repercussions / No Peace / Feral Ward</li>
 	<li>Repercussions / No Peace (Out of 100) / White / Feral Ward</li>
 	<li>Repos, The &amp; Fourteen or Fight / Split / Clear Red / Gloom</li>
@@ -268,7 +365,7 @@ p {
 	<li>The Ropes / ST / Clear Red / Youth Attack</li>
 	<li>Rorschach / Needle Pack / WarDance</li>
 	<li>Rorschach &amp; 1.6 / Split / Chainsaw Safety &amp; Troubleman &amp; Carnage</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Salvation / Smoke and Mirrors (Out of 300) / White / Youth Attack</li>
 	<li>Salvation / Smoke and Mirrors (Second Press Out of 88) / Blue Marble / Youth Attack</li>
 	<li>Salvation / House of The Beating Hell (Tour Edition Out of 150) / Youth Attack</li>
@@ -282,21 +379,21 @@ p {
 	<li>Suburbanite / ST / White / Youth Attack</li>
 	<li>Svart Framtid / 1984 (Out of 1000) / Voltage</li>
 	<li>Syphilitic Vaginas / Black Motor Covenant / Rescued From Life</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Talk is Poison / ST (Out of 1500) / Prank</li>
 	<li>Talk is Poison / Straight to Hell (Out of 1000) / Pink Marbel / Prank</li>
 	<li>Teenage Jesus and the Jerks / Orphans / Lust/Unlust</li>
 	<li>Total Abuse / Demo 06 / Even Worse</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>VA / Klein Circus / Circus</li>
 	<li>VA / Mein Comp (Out of 300) / Clear Marble Red / Youth Attack &amp; Soviet State</li>
 	<li>VA / Putrid Evil (Out of 3000) / Flexi / Clear Red / Self Released</li>
 	<li>VA / Unsafe At Any Speed / Modern Method</li>
-	<li>VA / We Still Can’t Help it if we’re From Florida (2nd Press of 500) / Burrito <strong>x2</strong></li>
+	<li>VA / We Still Can't Help it if we're From Florida (2nd Press of 500) / Burrito <strong>x2</strong></li>
 	<li>Veins / ST (Out of 300) / Clear / Youth Attack</li>
 	<li>Vile Gash/ ST (Out of 500) / Youth Attack</li>
 	<li>Vile Gash / Deluded (Out of 500) / Clear / Youth Attack</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Waco Fuck / No Child Left Behind / Thrash Your Face &amp; Mind Control</li>
 	<li>Waco Fuck / Slow Decay / Lifes a rape</li>
 	<li>Walls / The Crawl (White Cover Out of 300) / Iron Lung</li>
@@ -315,18 +412,18 @@ p {
 	<li>World Burns To Death / The War Can Go On Forever / HG Fact</li>
 	<li>World Burns to Death &amp; Slang / Babylon Endures &amp; Our Gray Earth / Clear Red / HG Fact</li>
 	<li>Wrangler Brutes / ST / Self-Released</li>
-	<br>
-	<p><strong>8&quot;</strong></p>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
+	<li class="section-heading"><strong>8&quot;</strong></li>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Born Against &amp; SuckerPunch / Alive With Pleasure / Flexi / Ebullition </li>
 	<li>Wrangler Brutes / The Tape / Double 8 &quot; / Clarence Thomas</li>
-	<br>
-	<p><strong>9&quot;</strong></p>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
+	<li class="section-heading"><strong>9&quot;</strong></li>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Das Oath / ST / Coalition</li>
-	<br> 
-	<p><strong>10&quot;</strong></p>
-	<br>
+	<li class="spacer" aria-hidden="true"></li> 
+	<li class="section-heading"><strong>10&quot;</strong></li>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Born Against / Battle Hymns of the Race War / Vermiform</li>
 	<li>Disclose / Great Swedish Feast (Out of 500) / OverThrow</li>
 	<li>Disclose / The Aspects of War / F.F.T.</li>
@@ -334,29 +431,29 @@ p {
 	<li>Rotten Sound / Loosin Face / Picture Disk / Anomie</li>
 	<li>Rudimentary Peni / Archaic / Outer Himalayan</li>
 	<li>Ruination / ST / Clear U.S.A. Shaped / Youth Attack</li>
-	<br>
-	<p><strong>11&quot;</strong></p>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
+	<li class="section-heading"><strong>11&quot;</strong></li>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Das Oath / ST / Youth Attack &amp; Coalition <strong>x2</strong></li>
 	<li>DropDead / Discography / ClearView</li>
-	<br>
-	<p><strong>12&quot;</strong></p>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
+	<li class="section-heading"><strong>12&quot;</strong></li>
+	<li class="spacer" aria-hidden="true"></li>
 	<!--<li>9 Shocks Terror / Paying homage / Sound Pollution</li>-->
 	<!--<li>9 Shocks Terror / Zen and the Art of Beating Your Ass / Grey Marble / Havoc</li>-->
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Adolescents / ST / Clear Blue / Frontier</li>
 	<li>Aerosols / ST with Bonud 7 &quot; (Out of 200) / Both on Clear / Youth Attack <strong>x2</strong></li>
 	<li>Ancestors / III / Youth Attack</li>
 	<li>Ash Pool / World Turns on it's Hinge (Out of 500) / Paragon</li>
 	<li>Appendix / Money Is Not My Currency / HöhNIE</li>
 	<li>Attitude Adjustment / American Paranoia / Pusmort</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Black Flag / Jealous Again / SSTBlack Flag / Family man / SST &amp; Freeway</li>
 	<li>Black Flag / Family Man /SST &amp; Freeway</li>
 	<li>Black Flag / Loose Nut / SST</li>
 	<li>Bone Awl / Meaningless Leaning Mess / Nuclear War Now</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>California Love / Can't Waste Death / Self-Released</li>
 	<li>California Love / Reaping the Whirlwind (Mailorder Copy Out of 100) / Purple Marble / Self-Released &amp; Youth Attack</li>
 	<li>Cancer Kids / Possible Dream (Out of 700) / Youth Attack</li>
@@ -370,7 +467,7 @@ p {
 	<li>The Crucifucks / ST / Alternative Tentacles</li>
 	<li>Cryptic Slaughter / Money Talks / Death &amp; Restless</li>
 	<li>Cult Ritual / ST (Out of 700) / Flesh / Youth Attack</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>D-Clone / Creation and Destroy / 540</li>
 	<li>Darvocets, The / Are... New Wave / Clear Blue / Fashionable Idiots</li>
 	<li>Das Oath / ST Mini LP (Out of 1000) / Clear / Youth Attack</li>
@@ -381,56 +478,56 @@ p {
 	<li>Disclose / Tragedy / Your Own Jailer</li>
 	<li>Disclose / The Demo's Album / Love and Hope</li>
 	<li>Disclose / No More Pain / Your Own Jailer</li>
-	<li>Disclose / Apocalypse of Death (Out of 1000) / Dan-Doh
+		<li>Disclose / Apocalypse of Death (Out of 1000) / Dan-Doh</li>
 	<li>Disclose / Yesterday's Fairytale, Tomorrow's Nightmare / Game of the Arseholes <strong>x2</strong></li>
 	<li>Disclose &amp; Hakuchi / Once the War Started (Out of 600) / Love and Hope</li>
 	<li>Disclose &amp; Totalitar / Split / Your Own Jailer</li>
 	<li>Disgust / Flashback to Trash Back... / Noise and Distortion</li>
 	<li>Double Negative / The Wonderful and Frightening World of... / No Way</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>EyeHateGod / Dope Sick / Emetic &amp; Century Media</li>
 	<li>EyeHateGod / Southern Discomfort / EyeballEyeHateGod / Preaching the  &quot;End-Time &quot; Message / Gatefold / Emetic</li>
 	<li>EyeHateGod / Confederacy of Ruined Lives (Out of 400) / Century Media &amp; Im Better Than Everyone</li>
 	<li>EyeHateGod / Preaching The "End-Time" Message / Emetic</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Factums / Alien Native (Out of 500) / SiltBreeze</li>
 	<li>Factums / The Sistrum (Out of 900) / Bonus 7 &quot; / Sacred Bones</li>
 	<li>Factums / A Primitive Future (Out of 400) / Assophon</li>
 	<li>Failures / ST / White / Youth Attack (Mail Order Out of 100) / White / Youth Attack</li>
 	<li>Framtid / Under the Ashes / Black Water</li>
 	<li>Fucked Up / Year of the Pig / Self-Released</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>G.I.S.M. / Militaly Affairs Neurotic / Purple Marble / Beast Arts</li>
-	<li>G.I.S.M. / SonicCRIME TheRapy (Out of 500) / Double LP / Bootleg
+		<li>G.I.S.M. / SonicCRIME TheRapy (Out of 500) / Double LP / Bootleg</li>
 	<li>Gash &amp; Depression / Australia and More / Flip Side</li>
 	<li>Gauze / Binbou Yusuri No Rizumu Ni Notte / Prank</li>
 	<li>Gloom / Vokusatsu Seisin Hatansha / Crust War</li>
 	<li>Grinning Death's Head / No Afterlife (Out of 500) / White Marble / Youth Attack</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Hated Youth &amp; Roach Motel / King of Bands / Burrito</li>
 	<li>Heresy / Face Up to it! / In Your Face</li>
 	<li>Hoax / Collection (Out of 1000) / Adagio 10830</li>
 	<li>Hoax / ST / Self-Released</li>
 	<li>HomoStupids / The Intern / Blue / Parts Unknown</li>
 	<li>Husker Du / Zen Arcade / Double LP / SST</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Insect Warfare / World Extermination / Black Splatter / RSR &amp; 625 Thrashcore</li>
 	<li>Invasion / ST (Out of 500) / La Vida es un Mus</li>
 	<li>Iron Lung / Life. Iron Lung. Death. / 625 Thrashcore &amp; Boredom Noise</li>
 	<li>Iron Lung &amp; Shank / Split / 625 Thrashcore &amp; Out of Limits</li>
 	<li>Iron Lung / Sexless // No Sex (Tour Copy Out of 300) / Clear Blue / Prank</li>
 	<li>Iron Lung / White Glove Test / Double LP / Iron Lung &amp; Prank</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Jerry's Kids / Is This My World? / X Claim</li>
 	<li>Jezus and the Gospelfuckers &amp; Agent Orange / Split / Kangaroo</li>
 	<li>Judge / Bringin' it Down / Revalation</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Loser Life / I Have Ghosts and I Have Ghosts / Magic Bullet &amp; Missathorpisse &amp; OneSixOh</li>
 	<li>Loser Life / I Have Ghosts and I Have Ghosts / Clear / Magic Bullet &amp; Missathorpissed &amp; OneSixOh</li>
 	<li>Loser Life / My Hell (Out of 100) / Green Marble / Life's a Rape</li>
 	<li>Loser Life / My Hell (B Side Etching) / Taken By Surprise</li>
 	<li>Look Back and Laugh / State of Illusion / Screen Print on B Side / Self-Released</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Men's Recovery Project &amp; Sinking Body (TEST PRESS) / Grappling With the Homonids / Vermiform</li>
 	<li>Men's Recovery Project &amp; Sinking Body / Grappling With the Homonids / Vermiform</li>
 	<li>Men's Recovery Project / Resist The New Way (TEST PRESS) / Vermiform</li>
@@ -439,12 +536,12 @@ p {
 	<li>Mind Eraser / Glacial Reign (Out of 825) / PainKiller</li>
 	<li>Moss / Cthonic Rites (Out of 1000) / Double LP / Aurora Borealis</li>
 	<li>Murder-Suicide Pact / ST / Burrito</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>New Model Army / The Ghost of Cain / Capital &amp; EMI</li>
 	<li>No Trend / Tritonian Nash-Vegas Polyester Complex / Touch and Go</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Omegas / Blasts of Lunacy / Clear / Parts Unknown</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Reagan Youth / VOL.1 / New Red Archives</li>
 	<li>Repercussions / 11 Song EP / 540</li>
 	<li>Repos, The / ST / Youth Attack &amp; Fork Burn</li>
@@ -457,7 +554,7 @@ p {
 	<li>Rudimentary Peni / Cacophony / Outer Himalayan Ruin / Fiat Lux / Meta Meta</li>
 	<li>Ruin / He-Ho / Red</li>
 	<li>Ruin / Fiat Lux / Meta Meta</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Salvation / of Unforgiving Wind (Out of 500) / Purple Marble / Youth Attack</li>
 	<li>Salvation / of Unforgiving Wind (Mailorder Out of 100) / White / Youth Attack</li>
 	<li>Salvation / Mortality Interactions (REJECTED TEST PRESS Out of 25) / Youth Attack</li>
@@ -472,9 +569,9 @@ p {
 	<li>SQRM / Rodeo (Out of ) / White / Youth Attack</li>
 	<li>SubCulture / I Heard a Scream / Clear Green / FartBlossom Enterprizes</li>
 	<li>Suicidal Tendencies / Possessed To Skate / Virign</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Urban Blight / More Reality / Slasher</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>VA / Flex Your Head / Discord</li>
 	<li>VA / False Object Sensor / X-MistVA / Give Me Back / Ebullition</li>
 	<li>VA / Give Me Back / Ebullition</li>
@@ -489,28 +586,17 @@ p {
 	<li>Vaaska / Ruido Hasta La Muerte / 540</li>
 	<li>Vile / Solution (Out of 300) / Self Released</li>
 	<li>Vile / Solution (Out of 500) / Parts Unknown</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>Waco Fuck / Paranoia is Total Awareness / Clear / Life's a Rape</li>
 	<li>Walls / ST (Out of 233) / White with Black Swirls / PainKiller</li>
 	<li>World Burns to Death / The Sucking of the Missile Cock / Hardcore Holocaust</li>
 	<li>World Burns to Death / Totalitarian Sodomy / Hardcore Holocaust</li>
 	<li>World Burns to Death / The Graveyard of Utopia / Prank</li>
 	<li>Wrangler Brutes / Zulu / Self-Released</li>
-	<br>
+	<li class="spacer" aria-hidden="true"></li>
 	<li>ZMIV / Noise of ZMIV 1979~1984 / Clear / Noise &amp; Distortion</li>
-</ul>
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('li').mouseenter(function() {
-			$(this).css({'marginLeft':'20px',
-						 'color':'#00D9D9'});
-		});
-		$('li').mouseleave(function() {
-			$(this).css({'marginLeft':'0px',
-						 'color':'#ffffff'});
-		});
-	});
-</script>
+		</ul>
+	</section>
+</main>
 </body>
 </html>

@@ -15,46 +15,50 @@
 
 @media(max-width: 480px) {
 	#textFader {
-		border-radius: 0px;
-		display: inline ;
-		width: 32px;
+		display: block;
 	}
 }
 
 #textFader h1 {
+	animation: headingReveal 2s ease forwards;
 	color: #ffffff;
-	display: none;
+	display: block;
+	filter: blur(8px);
 	font-family:  'helveticaNeue';
-	font-size: 140px;
+	font-size: clamp(80px, 12vw, 140px);
 	font-weight: 200;
-	width: 100%;
-	overflow: hidden;
-	text-transform: uppercase;
-	padding: 0;
+	letter-spacing: clamp(8px, 1.6vw, 20px);
 	margin: 0;
-	letter-spacing: 20px;
+	opacity: 0;
+	overflow: hidden;
+	padding: 0;
 	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
 }
-
-/* "rebuilt in animation.js"
-@media(min-width: 480px) {
-	#textFader h1 {
-		animation: textResizeLarge linear 0.45s;
-		-webkit-animation: textResizeLarge linear 0.45s;
-		-moz-animation: textResizeLarge linear 0.45s;
-		-o-animation: textResizeLarge linear 0.45s;
-	}
-}
-*/
 
 @media(max-width : 480px) {
 	#textFader h1 {
-		font-size: 80px;
 		margin: 0px 10px;
-	/*	animation: textResizeLarge linear 0.45s;
-		-webkit-animation: textResizeSmall linear 0.45s;
-		-moz-animation: textResizeSmall linear 0.45s;
-		-o-animation: textResizeLarge linear 0.45s;
-	*/
+	}
+}
+
+@keyframes headingReveal {
+	from {
+		filter: blur(8px);
+		opacity: 0;
+	}
+
+	to {
+		filter: blur(0);
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#textFader h1 {
+		animation: none;
+		filter: none;
+		opacity: 1;
 	}
 }
