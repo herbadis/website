@@ -1,0 +1,151 @@
+{
+  "pagination": {
+    "items": 5,
+    "page": 1,
+    "pages": 1,
+    "per_page": 100
+  },
+  "releases": [
+    {
+      "id": 1,
+      "instance_id": 1001,
+      "basic_information": {
+        "title": "Damaged",
+        "year": 1981,
+        "artists": [
+          {
+            "name": "Black Flag"
+          }
+        ],
+        "labels": [
+          {
+            "name": "SST"
+          }
+        ],
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "instance_id": 1002,
+      "basic_information": {
+        "title": "Holiday In Cambodia",
+        "year": 1980,
+        "artists": [
+          {
+            "name": "Dead Kennedys"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Cherry Red"
+          }
+        ],
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "7\"",
+              "45 RPM",
+              "Single"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "instance_id": 1003,
+      "basic_information": {
+        "title": "Out Of Step",
+        "year": 1983,
+        "artists": [
+          {
+            "name": "Minor Threat"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Dischord"
+          }
+        ],
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "12\"",
+              "EP"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "instance_id": 1004,
+      "basic_information": {
+        "title": "Nervous Breakdown",
+        "year": 1979,
+        "artists": [
+          {
+            "name": "Black Flag (2)"
+          }
+        ],
+        "labels": [
+          {
+            "name": "SST Records"
+          }
+        ],
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "7\"",
+              "EP"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "instance_id": 1005,
+      "basic_information": {
+        "title": "Fresh Fruit For Rotting Vegetables",
+        "year": 1980,
+        "artists": [
+          {
+            "name": "Dead Kennedys"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Alternative Tentacles"
+          }
+        ],
+        "formats": [
+          {
+            "name": "CD",
+            "qty": "1",
+            "descriptions": [
+              "Album",
+              "Reissue"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

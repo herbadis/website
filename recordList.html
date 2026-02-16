@@ -1,602 +1,558 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Record List</title>
 <style>
-@font-face {
-	font-family: 'helveticaNeue';
-	src: url(assets/fonts/HelveticaNeueLTPro-UltLtEx.otf);
-}
-
 :root {
-	--bg: #17171a;
-	--panel: rgba(36, 36, 41, 0.92);
-	--text: #ffffff;
-	--muted: #c5c5cc;
-	--accent: #00d9d9;
-	--line: rgba(255, 255, 255, 0.24);
+  --bg: #17171a;
+  --panel: rgba(36, 36, 41, 0.92);
+  --text: #ffffff;
+  --muted: #c5c5cc;
+  --accent: #00d9d9;
+  --line: rgba(255, 255, 255, 0.24);
 }
-
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 body {
-	background:
-		radial-gradient(circle at top left, #2b2b31 0%, transparent 45%),
-		radial-gradient(circle at bottom right, #141417 0%, transparent 40%),
-		var(--bg);
-	color: var(--text);
-	font-family: 'helveticaNeue', "Helvetica Neue", Helvetica, Arial, sans-serif;
-	margin: 0;
-	min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, #2b2b31 0%, transparent 45%),
+    radial-gradient(circle at bottom right, #141417 0%, transparent 40%),
+    var(--bg);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
 }
-
 .record-list-page {
-	align-items: stretch;
-	display: flex;
-	justify-content: center;
-	min-height: 100vh;
-	padding: clamp(16px, 3vw, 36px);
+  align-items: stretch;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: clamp(16px, 3vw, 36px);
 }
-
 .record-list-panel {
-	background: var(--panel);
-	border: 1px solid var(--line);
-	border-radius: 16px;
-	box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
-	overflow: hidden;
-	width: min(1080px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  width: min(1080px, 100%);
 }
-
 .record-list-header {
-	border-bottom: 1px solid var(--line);
-	padding: clamp(16px, 2.8vw, 26px);
-	text-align: center;
+  border-bottom: 1px solid var(--line);
+  padding: clamp(16px, 2.8vw, 26px);
+  text-align: center;
 }
-
 .record-list-header h1 {
-	font-size: clamp(20px, 3vw, 30px);
-	font-weight: 200;
-	letter-spacing: 0.14em;
-	margin: 0;
-	text-transform: uppercase;
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 200;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
 }
-
 .record-list {
-	list-style: none;
-	margin: 0;
-	max-height: calc(100vh - 180px);
-	overflow: auto;
-	padding: 18px clamp(16px, 2.5vw, 30px) 28px;
+  list-style: none;
+  margin: 0;
+  max-height: calc(100vh - 180px);
+  overflow: auto;
+  padding: 18px clamp(16px, 2.5vw, 30px) 28px;
 }
-
 .record-list li {
-	color: var(--text);
-	font-size: clamp(12px, 1.15vw, 16px);
-	line-height: 1.5;
-	transition: color 0.2s ease, transform 0.2s ease;
+  color: var(--text);
+  font-size: clamp(12px, 1.15vw, 16px);
+  line-height: 1.5;
+  padding: 7px 0;
+  transition: color 0.2s ease;
 }
-
-.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
-	color: var(--accent);
-	transform: translateX(12px);
+.record-list .record-item {
+  color: var(--text);
 }
-
+.record-list .record-item a {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+.record-list .record-item:hover,
+.record-list .record-item a:hover,
+.record-list .record-item a:focus-visible {
+  color: var(--accent);
+}
 .record-list .section-heading {
-	font-size: clamp(13px, 1.4vw, 18px);
-	letter-spacing: 0.06em;
-	text-align: center;
-	text-transform: uppercase;
+  font-size: clamp(13px, 1.4vw, 18px);
+  letter-spacing: 0.06em;
+  padding: 4px 0;
+  text-align: center;
+  text-transform: uppercase;
 }
-
 .record-list .section-heading strong {
-	font-weight: 400;
+  font-weight: 400;
 }
-
 .record-list .meta {
-	color: var(--muted);
-	font-size: clamp(12px, 1.1vw, 15px);
-	margin: 0;
-	text-align: center;
+  color: var(--muted);
+  font-size: clamp(12px, 1.1vw, 15px);
+  margin: 0;
+  padding: 2px 0;
+  text-align: center;
 }
-
 .record-list .divider {
-	border-top: 1px solid var(--line);
-	height: 0;
-	margin: 10px auto 12px;
-	padding: 0;
-	width: min(460px, 100%);
+  border-top: 1px solid var(--line);
+  height: 0;
+  margin: 10px auto 12px;
+  padding: 0;
+  width: min(460px, 100%);
 }
-
 .record-list .spacer {
-	height: 10px;
-	padding: 0;
+  height: 12px;
+  padding: 0;
 }
-
 @media(max-width: 768px) {
-	.record-list {
-		max-height: none;
-	}
-
-	.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
-		transform: none;
-	}
+  .record-list {
+    max-height: none;
+  }
 }
-
 @media (hover: none) {
-	.record-list li:not(.meta):not(.section-heading):not(.spacer):not(.divider):hover {
-		color: var(--text);
-		transform: none;
-	}
+  .record-list .record-item:hover,
+  .record-list .record-item a:hover {
+    color: var(--text);
+  }
 }
-
 @media (prefers-reduced-motion: reduce) {
-	.record-list li {
-		transition: none;
-	}
+  .record-list li {
+    transition: none;
+  }
 }
 </style>
 </head>
 <body>
 <main class="record-list-page">
-	<section class="record-list-panel" aria-label="Record collection">
-		<header class="record-list-header">
-			<h1>Record List</h1>
-		</header>
-		<ul class="record-list">
-			<li class="section-heading"><strong>Last Updated: 9/11/14</strong></li>
-			<li class="section-heading"><strong>All vinyl is black unless otherwise noted.</strong></li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li class="meta">5&quot;-7&quot; : 223</li>
-			<li class="meta">8&quot;-11&quot; : 10</li>
-			<li class="meta">12&quot; : 135</li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li class="divider" role="separator" aria-hidden="true"></li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li class="section-heading"><strong>5&quot;</strong></li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li>Altars &amp; Issei Sagawa / Split (Out of 130) / How Much Art Can You Take?</li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li class="section-heading"><strong>7&quot;</strong></li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li>86 Mentality / ST / Grave Mistake</li>
-			<li>86 Mentality / On The Loose / Grave Mistake</li>
-			<li>86 Mentality / Final Exit / Deranged</li>
-			<!--<li>9 Shocks Terror / ST (Out of 100) / Even Worse</li>-->
-			<!--<li>9 Shocks Terror / Mobile Terror Unit / Green Marble / Havoc</li>-->
-			<!--<li>9 Shocks Terror &amp; Devoid of Faith / Split / Grey / Gloom</li>-->
-			<!--<li>9 Shocks Terror &amp; The Killers / Split / Orange Marble / Gloom</li>-->
-			<li class="spacer" aria-hidden="true"></li>
-			<li>A.D. Nauseam / BrainStorm / Flicknife</li>
-			<li>Adolescents / Amoeba / Blue, One-Sided with Etchings on B Side / Posh Boy</li>
-			<li>Adolescents / Welcome to Reality / Frontier</li>
-			<li>Aerosols / Medicine (Out of 200) / Coke Bottle Clear / Youth Attack</li>
-			<li>Agent Orange / Everything Turns Gray (Heavy Sleeve Paper) / Posh Boy</li>
-			<li>Agent Orange / VD - Hello Boy Friend, Coming MY Way? / New Wave </li>
-			<li>Altars / Das Vergewaltigte (Out of 300) / Clear Red with Hand Etchings / Youth Attack</li>
-			<li>Ashpool / Black Bondage in the North (Out of 500) / Paragon</li>
-			<li>Ashpool / Saturns Slave / Clear Blue / Hospital</li>
-			<li>Ashpool / Saturns Slave (Store Only Copy Out of 100) / Clear / Hospital</li>
-			<li>The Avengers / We Are The One (2nd Press) / Blue / DangerHouse</li>
-			<li class="spacer" aria-hidden="true"></li>
-			<li>Bone Awl / ...So, I Must Take From the Earth (Out of 300) / Double 7 &quot; / Hospital</li>
-			<li>Bone Awl / Undying Glare / Nuclear War Now</li>
-			<li>Born Against / ST / Vermiform</li>
-			<li>Born Against &amp; Universal Order of Armageddon / Split / Gravity</li>
-			<li>Brain Handle / Smiling (Third Press Out of 500) / Iron Lung</li>
-			<!--<li>Breathing Fire / ST (Out of 544) / PainKillerBroken Bones / Decapitated / Fall Out</li>-->
-			<li>Broken Bones / Decapitated / Fall Out</li>
-			<li class="spacer" aria-hidden="true"></li>
-	<li>Career Suicide / ST / Kangaroo</li>
-	<li>Career Suicide / Sars (Silk Screened logo on Cover Out of 1500) / Deranged</li>
-	<li>Career Suicide / Signals / Picture Disk (Out of 1000) / Even Worse &amp; Way Back When</li>
-	<li>Chaotic Dischord / Fuck The World / Riot City</li>
-	<li>Chaotic Dischord / Never Trust A Friend / Riot City</li>
-	<li>Cheetah Chrome Motherfuckers / Furious Party / Belfagor</li>
-	<li>Chemotherapy / I Don't Want To Be Watched (Out of 300) / Uprising</li>
-	<li>ClockCleaner / Frogrammer / Parts Unknown &amp; Richie</li>
-	<li>ClockCleaner / Missing Dick / Hit-Dat</li>
-	<li>Complaints / ST (Out of 300) / White / Youth Attack</li>
-	<li>Crass / How Does It Feel / Crass</li>
-	<li>Crime Desire / ID Music (Out of 200) / Life's a Rape</li>
-	<li>Crime Desire / In Lucifer's Grip / Life's a Rape</li>
-	<li>Crime Desire / In Lucifer's Grip (Out of 100or200?) / Red / Life's a Rape</li>
-	<li>Crime Desire / Nadir (Out of 200) / Life's a Rape</li>
-	<li>Crow / Neurotic Organization / Prank</li>
-	<li>Crow &amp; Artimus Pyle / Split / Prank &amp; Mangrove</li>
-	<li>Crow / ST / Prank</li>
-	<li>Cult Ritual / ST / Green Marble / Burrito</li>
-	<li>Cult Ritual / 2nd (Second Press Out of 500) Youth Attack</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Dead Kennedy&apos;s / Holiday in Cambodia; Police Truck / I.R.S.</li>
-	<li>Dead Kennedy&apos;s / Nazi Punk Fuck Off (Armband Included) / Alternative Tentacle</li>
-	<li>Deep Wound / ST / RadioBeat</li>
-	<li>Deep Wound / ST / Clear Blue / (Bootleg)</li>
-	<li>The Dicks / Peace? / R Radical Records</li>
-	<li>Discharge / Fight Back / Clay</li>
-	<li>Discharge / Realities of War / Clay</li>
-	<li>Discharge / Decontrol / ClayDischarge / Never Again / Clay</li>
-	<li>Discharge / Never Again / Clay</li>
-	<li>Discharge / State Violence State Control / Clay</li>
-	<li>Disclose / Once The War Started... (Out of 500) / OverThrow</li>
-	<li>Disclose &amp; Selfish / No More Pain! / D.I.Y.</li>
-	<li>Disclose / The Sound of Disaster / No Fashion</li>
-	<li>Disclose / Visions of War / Picture Disk / Distortion</li>
-	<li>Disclose / The Nuclear Victims / D.I.Y.</li>
-	<li>Disclose / The Nuclear Victims / Red / Whisper In Darkness</li>
-	<li>Disclose / Neverending War / Dan-Doh</li>
-	<li>Disclose / 4 Track E.P. / Overthrow</li>
-	<li>Disclose &amp; Squandred / Endless War (Second Press Out of 500) / No Fashion</li>
-	<li>Disclose &amp; Cluster Bomb Unit / War of Aggression (Out of 1500) / MCR Company</li>
-	<li>Disclose &amp; No Fucker / Split (TEST PRESS Out of 3) / OverThrow</li>
-	<li>Disclose &amp; No Fucker / Split / Overthrow</li>
-	<li>Disclose &amp; Hell Krusher / Blood Sucking Freaks III / Bloodsucker</li>
-	<li>Disclose &amp; Hell Krusher / Blood Sucking Freaks III / Red / Bloodsucker</li>
-	<li>Disclose &amp; Homomilitia / Attack the Enemy / Scream</li>
-	<li>Disclose &amp; Framtid / Chainsaw Split / Dan-Doh</li>
-	<li>Disclose &amp; Framtid / Chainsaw Tour / Dan-Doh &amp; RSR</li>
-	<li>Disclose &amp; Framtid / Chainsaw Tour / Clear / Dan-Doh &amp; RSR</li>
-	<li>Disclose &amp; Framtid / Chainsaw Tour / Whisper in Darkness</li>
-	<li>Disclose &amp; Flyblown / In Chaos We Trust / Never Healed &amp; On The Verge</li>
-	<li>Disclose / Apocalypse Continues / Overthrow</li>
-	<li>Disclose &amp; Besthoven / Dis Nightmare Still Continues / White / Cries of Pain</li>
-	<li>Disclose &amp; Besthoven / Dis Nightmare Still Continues / Plague Bearer</li>
-	<li>Disclose &amp; No Fucker / Noise Not Music / Clear / Underage</li>
-	<li>Disclose / Apocalypse of Death (Out of 500) / Clear Red / RSR</li>
-	<li>Disclose / Apocalypse of Death / White / RSR</li>
-	<li>Disclose / Apocalypse of Death / RSR <strong>x2</strong></li>
-	<li>Disclose / A Mass of Raw Sound Assault / MCR</li>
-	<li>Disclose / A Mass of Raw Sound Assault (Tour Press) / MCR</li>
-	<li>Disclose &amp; World Burns to Death / Dis Nightmare Still Continues / Yellow Dog</li>
-	<li>Disclose &amp; World Burns to Death / Dis Nightmare Still Continues (Out of 700) / Dan-Doh</li>
-	<li>Disclose &amp; G.A.T.E.S. / Nuclear Hell / Dan-Doh</li>
-	<li>Disclose &amp; Cruelty / Controlled By Fear / Dan-Doh</li>
-	<li>Disclose &amp; Cruelty / Controlled by Fear / Plague Bearer</li>
-	<li>Disclose &amp; Cruelty / Controlled By Fear (Out of 500) / Room 101 &amp; Final Attempt</li>
-	<li>Disclose &amp; Scarred For Life / Grey Earth / Dan-Doh</li>
-	<li>Disclose &amp; Scarred for Life / Grey Earth / Despotic</li>
-	<li>Disgust / The Last Blast / Hageland</li>
-	<li>Disorder / Mental Disorder / Disorder</li>
-	<!--<li>Double Negative / Hardcore Confusion Vol. 1 / Orange Marble / Sorry State</li>-->
-	<!--<li>Double Negative / Hardcore Confusion Vol. 2 / Orange Marble / Sorry State</li>-->
-	<li>Dust Heads / Tall Tails / White / Don Giovanni</li>
-	<li>Dust Heads / Tall Tails 2 / White / Don Giovanni</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Easter Kids / ST / Brain Drain</li>
-	<!--<li>Easter Kids / ST / White / Brain Drain</li>
-	<li>Easter Kids / ST / White and Grey / Brain Drain</li>
-	<li>Easter Kids / ST (Record Release) / Missanthropissed</li>
-	<li>Easter Kids / ST / Missanthropissed </li>
-	<li>Easter Kids / ST (Out of 24) / Missanthropissed</li>
-	<li>Easter Kids / ST (Before Scanned Copy of New Cover) / Missanthropissed</li>
-	<li>Easter Kids / ST (Diffrent Cover) / Missanthropissed</li>-->
-	<li>Ecoli / ST / Stress Domain</li>
-	<li>EyeHateGod &amp; soilent green / Split / Incision</li>
-	<li>EyeHateGod &amp; Anal Cunt / In These Black Days: A Tribute to Black Sabbath Vol.1 / Hydra Head</li>
-	<li>EyeHateGod &amp; Cripple Bastards / I am the Gestapo / Southern Lord</li>
-	<li>EyeHateGod / 99 Miles of Bad Road / 2+2=5</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>F / Mess You Up / Green / Super Seven &amp; Thrash &amp; Bootleg &amp; Ghetto-Way &amp; Mystic</li>
-	<li>F / Four from '84 / Grey Marble / Burrito</li>
-	<li>F.O.D. / Love Songs / Speed of Sound</li>
-	<li>Factums / See Inside (Out of 300) / PollyMaggoo</li>
-	<li>Filth / Live the Chaos / Look Out!Flag of Democracy / Love Songs / Speed of Sound</li>
-	<li>FNU Ronnies / Meat / White / Richie </li>
-	<li>Fogna / ST (Second Press Out of 200) / Coke Bottle Clear / Bat Shit</li>
-	<li>Formaldehyde Junkies / Are a Total Wreak / Underestimated</li>
-	<li>Formaldehyde Junkies / ST / Fashionable Idiots</li>
-	<li>Front Line / Basic Training / Beach Impediment</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Gauze / Low Charge / White / Prank</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Hated Youth / Hardcore Rules / BurritoHeavy Cream / ST / Purple Marble / Infinity Cat</li>
-		<li>Heavy Cream / ST / Infinity Cat Recordings</li>
-	<li>Hoax / ST / Katorga Works &amp; Deranged</li>
-	<li>Hoax / 2nd ep / Youth Attack</li>
-	<li>Hoax / 2nd ep / Clear / Youth Attack</li>
-	<li>HomoStupids / The Glow / White / My Minds Eye <strong>x2</strong></li>
-	<li>HomoStupids / The Brutal Birthday / Richie</li>
-	<li>HomoStupids / The Edge (Orange Cover Out of 72) / Radio 81 &amp; P.Trash</li>
-	<li>HomoStupids / Cat Music / Fasionable Idiots</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Icon A.D. / Don't Feed Us Shit / Radical ChangeIggy Pop and the Stooges / Search and Destroy / Sundazed</li>
-	<li>Iggy and The Stooges / Search and Destroy / Sundazed Music &amp; Sony BMG Music Entertainment</li>
-	<li>Iron Lung / Demonstrations / 625 Thrashcore </li>
-	<li>Iron Lung &amp; Scurvy Bastards / Split / Enterruption</li>
-	<li>Iron Lung &amp; Lords of Light / Split / Wurgakkeoord</li>
-	<li>Iron Lung &amp; Agents of Abhorrence / Silent Decay (Yellow Cover Out of 400) / Purple &amp; White / Missing Link</li>
-	<li>Iron Lung / Cancer (Out of 524) / Iron Lung <strong>x2</strong></li>
-	<li>Iron Lung / Exposed (Shows Only Out of 500) / Iron Lung</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>J.F.A. / Blatant Localism (Second Press) / Placebo</li>
-	<li>Judge / New York Crew (Yellow Labels Out of 1000) / Schism</li>
-	<li>Judge / New York Crew (Yellow Glossy Sleeve) / Revelation</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Let Down / ST / Grey Marble / Doppelganger</li>
-	<li>Let Down / ST / Coke Bottle Clear / Doppelganger</li>
-	<li>Let Down / Crossed Off (Tour Press) / Green Marble / Dead By 23</li>
-	<li>Let Down / Crossed Off (This is Hardcore Press) / Blue / Dead by 23</li>
-		<li>Let Down / Crossed Off (Tour Press Sliver Eye) / Clear Red / Dead by 23</li>
-	<li>Let Down / Sacrifice Me ( Pre Order Out of 105) / Six Feet Under</li>
-	<li>Look Back and Laugh &amp; DropDead / Split / Armageddon</li>
-	<li>Look Back and Laugh / State of Illusion / Self-Released</li>
-	<li>Lords of Light / Dividing Up (Out of 300) / Iron Lung</li>
-	<li>Loser Life / Things Will Never Change (Out of 600) / Going underground</li>
-	<li>Loser Life / Things Will Never Change (Second Press of 300) / Going Underground</li>
-	<li>Loser Life / I Want the World / Lifes A Rape</li>
-	<li>Loser Life / I Want the World / White / Lifes A Rape</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Men's Recovery Project / Emergency Record / Organ &amp; Lungcast</li>
-	<li>Men's Recovery Project / Make a Baby / Vermiform</li>
-	<li>Men's Recovery Project / Normal man / Gravity</li>
-	<li>Men's Recovery Project / Botanic Mysteria / Kill Rock Stars</li>
-	<li>Men's Recovery Project / Immense Ovary Reject / WalkAbout &amp; Paralogy</li>
-	<li>Men's Recovery Project / Thank you for killing Me / Picture Disk / Paralogy</li>
-	<li>Mindless Mutant / ST / 625 Thrashcore &amp; Dangerously Small</li>
-	<li>Mission For Christ / Pennies From Hell / No TrendMobs / Diabolism / Noise Room <strong>2</strong></li>
-	<li>Mobs / Diabolism / Noise Room <strong>2</strong></li>
-	<li>Murder-Suicide / Lobotomy Kit / Grey Marble / Burrito</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Nazi Dust / ST (Out of 500) / Orange / Youth Attack</li>
-	<li>The Neos / End All Discrimination (Out of 500, Green Cover) / Alandhiscar</li>
-	<li>The Neos / Hassiban Gets The Martian Brain Squeeze (2nd Press) / Ratcage</li>
-	<li>Nig Heist / Walking Down The Street / ThermidorNo Trend / Teen Love / No Trend</li>
-	<li>No Trend / Teen Love / No Trend</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Oath, The / ST / Youth Attack &amp; Coalition &amp; Gloom</li>
-	<li>Oath, The &amp; Total Fury / Ears Go Deaf Tour 2002 (Japanese Tour Press) / Mangrove</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Pandemonium / Who The Fuck Are You? (First Cover Out of 50) / Red / Noise and Distortion</li>
-	<li>Pandemonium / Who The Fuck Are You? (Second Cover Out of 50) / Red / Noise and Distortion</li>
-	<li>Perfume Rive / No Wind (Out of 250) / Clear Flexi / Symphony of Destruction</li>
-	<li>Poison Idea / Darby Crash Rides Again (3rd Press) / American Leather</li>
-	<li>Putrid Fever / ST / Belfagor</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Repercussions / No Peace / Feral Ward</li>
-	<li>Repercussions / No Peace (Out of 100) / White / Feral Ward</li>
-	<li>Repos, The &amp; Fourteen or Fight / Split / Clear Red / Gloom</li>
-	<li>Residents, The / Satisfaction / Clear Yellow / IPH</li>
-	<li>Retainers / Teenage Regrets / Fashionable Idiots</li>
-	<li>The Ropes / ST / Self-Released</li>
-	<li>The Ropes / ST / Clear Red / Youth Attack</li>
-	<li>Rorschach / Needle Pack / WarDance</li>
-	<li>Rorschach &amp; 1.6 / Split / Chainsaw Safety &amp; Troubleman &amp; Carnage</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Salvation / Smoke and Mirrors (Out of 300) / White / Youth Attack</li>
-	<li>Salvation / Smoke and Mirrors (Second Press Out of 88) / Blue Marble / Youth Attack</li>
-	<li>Salvation / House of The Beating Hell (Tour Edition Out of 150) / Youth Attack</li>
-	<li>Salvation / House of The Beating Hell (Test Press Out of 25) / Clear Red / Youth Attack</li>
-	<li>ScapeGoat / ST (Out of 618) / PainKiller</li>
-	<li>Septic Death / Kichigai / Pusmort</li>
-	<li>Sex Vid / Tania / Dom America</li>
-	<li>Skeleton / What Will You Do? (Out of 400) / Cries of painSo What / Injustice (Out of 500) / Dirty Informal Section</li>
-	<li>Society Nurse / Junk Existence (Out of 700) / Iron Lung</li>
-	<li>Sperm Crickets / Organism of Species / Missathorpissed <strong>x2</strong></li>
-	<li>Suburbanite / ST / White / Youth Attack</li>
-	<li>Svart Framtid / 1984 (Out of 1000) / Voltage</li>
-	<li>Syphilitic Vaginas / Black Motor Covenant / Rescued From Life</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Talk is Poison / ST (Out of 1500) / Prank</li>
-	<li>Talk is Poison / Straight to Hell (Out of 1000) / Pink Marbel / Prank</li>
-	<li>Teenage Jesus and the Jerks / Orphans / Lust/Unlust</li>
-	<li>Total Abuse / Demo 06 / Even Worse</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>VA / Klein Circus / Circus</li>
-	<li>VA / Mein Comp (Out of 300) / Clear Marble Red / Youth Attack &amp; Soviet State</li>
-	<li>VA / Putrid Evil (Out of 3000) / Flexi / Clear Red / Self Released</li>
-	<li>VA / Unsafe At Any Speed / Modern Method</li>
-	<li>VA / We Still Can't Help it if we're From Florida (2nd Press of 500) / Burrito <strong>x2</strong></li>
-	<li>Veins / ST (Out of 300) / Clear / Youth Attack</li>
-	<li>Vile Gash/ ST (Out of 500) / Youth Attack</li>
-	<li>Vile Gash / Deluded (Out of 500) / Clear / Youth Attack</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Waco Fuck / No Child Left Behind / Thrash Your Face &amp; Mind Control</li>
-	<li>Waco Fuck / Slow Decay / Lifes a rape</li>
-	<li>Walls / The Crawl (White Cover Out of 300) / Iron Lung</li>
-	<li>Wankys, The / Noise Punk / Noise and Distortion</li>
-	<li>Waste Management / Get Your Mind Right (Out of 245) / Clear Green / PainKiller</li>
-	<li>Wheelchair Motherfuckers / White Crosses and Coffee (Out of 200) / Coke Bottle Clear / Confinement</li>
-	<li>White Cross / ST / Zero Degree</li>
-	<li>White Pigs / ST / Swinch Kwilsen</li>
-	<li>White Pigs / Hit Bonanza / Clear Purple / Mystic</li>
-	<li>Winterswijx Chaos Front / ST / Noise and distortion</li>
-	<li>Winterswijx Chaos Front / ST (Out of 100) / Green / Noise and distortion</li>
-	<li>World Burns to Death / Human Meat... Tossed to the Dogs of War / White / Prank</li>
-	<li>World Burns to Death / The Art of Self-Destruction / Clear Red / Hardcore Holocaust</li>
-	<li>World Burns to Death / &quot;No Dawm Comes...Night without End &quot; / Hardcore Holocaust</li>
-	<li>World Burns to Death / The War Can Go On Forever (Out of 1000) / HG Fact</li>
-	<li>World Burns To Death / The War Can Go On Forever / HG Fact</li>
-	<li>World Burns to Death &amp; Slang / Babylon Endures &amp; Our Gray Earth / Clear Red / HG Fact</li>
-	<li>Wrangler Brutes / ST / Self-Released</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li class="section-heading"><strong>8&quot;</strong></li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Born Against &amp; SuckerPunch / Alive With Pleasure / Flexi / Ebullition </li>
-	<li>Wrangler Brutes / The Tape / Double 8 &quot; / Clarence Thomas</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li class="section-heading"><strong>9&quot;</strong></li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Das Oath / ST / Coalition</li>
-	<li class="spacer" aria-hidden="true"></li> 
-	<li class="section-heading"><strong>10&quot;</strong></li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Born Against / Battle Hymns of the Race War / Vermiform</li>
-	<li>Disclose / Great Swedish Feast (Out of 500) / OverThrow</li>
-	<li>Disclose / The Aspects of War / F.F.T.</li>
-	<li>Disclose &amp; G.A.T.E.S. / Nuclear Hell / Plague Bearer</li>
-	<li>Rotten Sound / Loosin Face / Picture Disk / Anomie</li>
-	<li>Rudimentary Peni / Archaic / Outer Himalayan</li>
-	<li>Ruination / ST / Clear U.S.A. Shaped / Youth Attack</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li class="section-heading"><strong>11&quot;</strong></li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Das Oath / ST / Youth Attack &amp; Coalition <strong>x2</strong></li>
-	<li>DropDead / Discography / ClearView</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li class="section-heading"><strong>12&quot;</strong></li>
-	<li class="spacer" aria-hidden="true"></li>
-	<!--<li>9 Shocks Terror / Paying homage / Sound Pollution</li>-->
-	<!--<li>9 Shocks Terror / Zen and the Art of Beating Your Ass / Grey Marble / Havoc</li>-->
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Adolescents / ST / Clear Blue / Frontier</li>
-	<li>Aerosols / ST with Bonud 7 &quot; (Out of 200) / Both on Clear / Youth Attack <strong>x2</strong></li>
-	<li>Ancestors / III / Youth Attack</li>
-	<li>Ash Pool / World Turns on it's Hinge (Out of 500) / Paragon</li>
-	<li>Appendix / Money Is Not My Currency / HöhNIE</li>
-	<li>Attitude Adjustment / American Paranoia / Pusmort</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Black Flag / Jealous Again / SSTBlack Flag / Family man / SST &amp; Freeway</li>
-	<li>Black Flag / Family Man /SST &amp; Freeway</li>
-	<li>Black Flag / Loose Nut / SST</li>
-	<li>Bone Awl / Meaningless Leaning Mess / Nuclear War Now</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>California Love / Can't Waste Death / Self-Released</li>
-	<li>California Love / Reaping the Whirlwind (Mailorder Copy Out of 100) / Purple Marble / Self-Released &amp; Youth Attack</li>
-	<li>Cancer Kids / Possible Dream (Out of 700) / Youth Attack</li>
-	<li>Cheetah Chrome Motherfuckers / Into the Void / Belfagor</li>
-	<li>Citizen Arrest / Colossus / Wardance</li>
-	<li>ClockCleaner / Babylon Rules / Load</li>
-	<li>Crass / Christ the Album / Double LP / Crass</li>
-	<li>Crime Desire / ST (Out of 500) / Life's a Rape</li>
-	<li>Crime Desire / We Hate All Life (Out of 500, With Dog Tag) / Lifes A Rape</li>
-	<li>Crime Desire / Id Music to Combat the Superego / Life's a RapeCrime Desire / ST / White / Life's a Rape</li>
-	<li>The Crucifucks / ST / Alternative Tentacles</li>
-	<li>Cryptic Slaughter / Money Talks / Death &amp; Restless</li>
-	<li>Cult Ritual / ST (Out of 700) / Flesh / Youth Attack</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>D-Clone / Creation and Destroy / 540</li>
-	<li>Darvocets, The / Are... New Wave / Clear Blue / Fashionable Idiots</li>
-	<li>Das Oath / ST Mini LP (Out of 1000) / Clear / Youth Attack</li>
-	<li>Das Oath &amp; Ampere / Split (Tour Copy Out of 500) / Clean Plate</li>
-	<li>Das Oath / ST (Test Press Out of 100) / Youth Attack &amp; Coalition</li>
-	<li>Dead Kennedys / In God we Trust, INC. / Alternative Tentacles</li>
-	<li>Disclose / Tragedy / Your Own Jailer &amp; Lazy</li>
-	<li>Disclose / Tragedy / Your Own Jailer</li>
-	<li>Disclose / The Demo's Album / Love and Hope</li>
-	<li>Disclose / No More Pain / Your Own Jailer</li>
-		<li>Disclose / Apocalypse of Death (Out of 1000) / Dan-Doh</li>
-	<li>Disclose / Yesterday's Fairytale, Tomorrow's Nightmare / Game of the Arseholes <strong>x2</strong></li>
-	<li>Disclose &amp; Hakuchi / Once the War Started (Out of 600) / Love and Hope</li>
-	<li>Disclose &amp; Totalitar / Split / Your Own Jailer</li>
-	<li>Disgust / Flashback to Trash Back... / Noise and Distortion</li>
-	<li>Double Negative / The Wonderful and Frightening World of... / No Way</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>EyeHateGod / Dope Sick / Emetic &amp; Century Media</li>
-	<li>EyeHateGod / Southern Discomfort / EyeballEyeHateGod / Preaching the  &quot;End-Time &quot; Message / Gatefold / Emetic</li>
-	<li>EyeHateGod / Confederacy of Ruined Lives (Out of 400) / Century Media &amp; Im Better Than Everyone</li>
-	<li>EyeHateGod / Preaching The "End-Time" Message / Emetic</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Factums / Alien Native (Out of 500) / SiltBreeze</li>
-	<li>Factums / The Sistrum (Out of 900) / Bonus 7 &quot; / Sacred Bones</li>
-	<li>Factums / A Primitive Future (Out of 400) / Assophon</li>
-	<li>Failures / ST / White / Youth Attack (Mail Order Out of 100) / White / Youth Attack</li>
-	<li>Framtid / Under the Ashes / Black Water</li>
-	<li>Fucked Up / Year of the Pig / Self-Released</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>G.I.S.M. / Militaly Affairs Neurotic / Purple Marble / Beast Arts</li>
-		<li>G.I.S.M. / SonicCRIME TheRapy (Out of 500) / Double LP / Bootleg</li>
-	<li>Gash &amp; Depression / Australia and More / Flip Side</li>
-	<li>Gauze / Binbou Yusuri No Rizumu Ni Notte / Prank</li>
-	<li>Gloom / Vokusatsu Seisin Hatansha / Crust War</li>
-	<li>Grinning Death's Head / No Afterlife (Out of 500) / White Marble / Youth Attack</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Hated Youth &amp; Roach Motel / King of Bands / Burrito</li>
-	<li>Heresy / Face Up to it! / In Your Face</li>
-	<li>Hoax / Collection (Out of 1000) / Adagio 10830</li>
-	<li>Hoax / ST / Self-Released</li>
-	<li>HomoStupids / The Intern / Blue / Parts Unknown</li>
-	<li>Husker Du / Zen Arcade / Double LP / SST</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Insect Warfare / World Extermination / Black Splatter / RSR &amp; 625 Thrashcore</li>
-	<li>Invasion / ST (Out of 500) / La Vida es un Mus</li>
-	<li>Iron Lung / Life. Iron Lung. Death. / 625 Thrashcore &amp; Boredom Noise</li>
-	<li>Iron Lung &amp; Shank / Split / 625 Thrashcore &amp; Out of Limits</li>
-	<li>Iron Lung / Sexless // No Sex (Tour Copy Out of 300) / Clear Blue / Prank</li>
-	<li>Iron Lung / White Glove Test / Double LP / Iron Lung &amp; Prank</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Jerry's Kids / Is This My World? / X Claim</li>
-	<li>Jezus and the Gospelfuckers &amp; Agent Orange / Split / Kangaroo</li>
-	<li>Judge / Bringin' it Down / Revalation</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Loser Life / I Have Ghosts and I Have Ghosts / Magic Bullet &amp; Missathorpisse &amp; OneSixOh</li>
-	<li>Loser Life / I Have Ghosts and I Have Ghosts / Clear / Magic Bullet &amp; Missathorpissed &amp; OneSixOh</li>
-	<li>Loser Life / My Hell (Out of 100) / Green Marble / Life's a Rape</li>
-	<li>Loser Life / My Hell (B Side Etching) / Taken By Surprise</li>
-	<li>Look Back and Laugh / State of Illusion / Screen Print on B Side / Self-Released</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Men's Recovery Project &amp; Sinking Body (TEST PRESS) / Grappling With the Homonids / Vermiform</li>
-	<li>Men's Recovery Project &amp; Sinking Body / Grappling With the Homonids / Vermiform</li>
-	<li>Men's Recovery Project / Resist The New Way (TEST PRESS) / Vermiform</li>
-	<li>Men's Recovery Project / The Best of Men's Recovery Project / Double LP / Load</li>
-	<li>Mind Eraser / Cave (Out of 975) / PainKiller</li>
-	<li>Mind Eraser / Glacial Reign (Out of 825) / PainKiller</li>
-	<li>Moss / Cthonic Rites (Out of 1000) / Double LP / Aurora Borealis</li>
-	<li>Murder-Suicide Pact / ST / Burrito</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>New Model Army / The Ghost of Cain / Capital &amp; EMI</li>
-	<li>No Trend / Tritonian Nash-Vegas Polyester Complex / Touch and Go</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Omegas / Blasts of Lunacy / Clear / Parts Unknown</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Reagan Youth / VOL.1 / New Red Archives</li>
-	<li>Repercussions / 11 Song EP / 540</li>
-	<li>Repos, The / ST / Youth Attack &amp; Fork Burn</li>
-	<li>Repos, The / Ending on a Positive Note (Out of 300) / Youth Attack <strong>x2</strong></li>
-	<li>Residents, The / Commercial Album / Ralph</li>
-	<li>Residents, The / 13th Anniversary Show - Live in Japan / Ralph</li>
-	<li>Rorschach / Remain Sedate / Gern Blandsten</li>
-	<li>Rorschach / Protestant / Gern Blandsten &amp; WarDance</li>
-	<li>Rudimentary Peni / The Ep's of Rp / Corpus Christi</li>
-	<li>Rudimentary Peni / Cacophony / Outer Himalayan Ruin / Fiat Lux / Meta Meta</li>
-	<li>Ruin / He-Ho / Red</li>
-	<li>Ruin / Fiat Lux / Meta Meta</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Salvation / of Unforgiving Wind (Out of 500) / Purple Marble / Youth Attack</li>
-	<li>Salvation / of Unforgiving Wind (Mailorder Out of 100) / White / Youth Attack</li>
-	<li>Salvation / Mortality Interactions (REJECTED TEST PRESS Out of 25) / Youth Attack</li>
-	<li>Salvation / Mortality Interactions (Out of 500) / Brown Marble / Youth Attack</li>
-	<li>Salvation / Mortality Interactions (Out of 300) / Purple Marble / Youth Attack</li>
-	<li>Samhain / Initium / Plan 9</li>
-	<li>Septic Death / Need So Much Attention (UK Pressing) / Pusmort</li>
-	<li>Skeleton &amp; Besthoven / Welcome the Hail / The Total End</li>
-	<li>Skitslickers / Skitslickers 1982 (Out of 500) / Picture Disk / Distortion</li>
-	<li>Society Nurse / ST (Out of 700) / Iron Lung <strong>x2</strong></li>
-	<li>SS Decontrol / Get it Away / X Claim</li>
-	<li>SQRM / Rodeo (Out of ) / White / Youth Attack</li>
-	<li>SubCulture / I Heard a Scream / Clear Green / FartBlossom Enterprizes</li>
-	<li>Suicidal Tendencies / Possessed To Skate / Virign</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Urban Blight / More Reality / Slasher</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>VA / Flex Your Head / Discord</li>
-	<li>VA / False Object Sensor / X-MistVA / Give Me Back / Ebullition</li>
-	<li>VA / Give Me Back / Ebullition</li>
-	<li>VA / God's Chosen People / Old Glory</li>
-	<li>VA / Hardcore From The Early Days (Out of 500) / Cold Sweat</li>
-	<li>VA / Iron Columns / Dounle LP / Mind Control</li>
-	<li>VA / Mystic Sampler #1 (Out of 1000) / Mystic</li>
-	<li>VA / They Pelted Us With Rocks and Garbage / After Hours</li>
-	<li>VA / Someone Got Their Head Kicked In! / BYO</li>
-	<li>VA / We Got Power #2 Party Animal / Mystic</li>
-	<li>VA / We Got Power #3 We Got Party / Mystic</li>
-	<li>Vaaska / Ruido Hasta La Muerte / 540</li>
-	<li>Vile / Solution (Out of 300) / Self Released</li>
-	<li>Vile / Solution (Out of 500) / Parts Unknown</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>Waco Fuck / Paranoia is Total Awareness / Clear / Life's a Rape</li>
-	<li>Walls / ST (Out of 233) / White with Black Swirls / PainKiller</li>
-	<li>World Burns to Death / The Sucking of the Missile Cock / Hardcore Holocaust</li>
-	<li>World Burns to Death / Totalitarian Sodomy / Hardcore Holocaust</li>
-	<li>World Burns to Death / The Graveyard of Utopia / Prank</li>
-	<li>Wrangler Brutes / Zulu / Self-Released</li>
-	<li class="spacer" aria-hidden="true"></li>
-	<li>ZMIV / Noise of ZMIV 1979~1984 / Clear / Noise &amp; Distortion</li>
-		</ul>
-	</section>
+  <section class="record-list-panel" aria-label="Record collection">
+    <header class="record-list-header">
+      <h1>Record List</h1>
+    </header>
+    <ul class="record-list">
+            <li class="section-heading"><strong>Discogs Collection Sync</strong></li>
+            <li class="meta">User: oldgodnewgod</li>
+            <li class="meta">Synced: February 15, 2026 20:56</li>
+            <li class="meta">Total Records: 380</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="divider" role="separator" aria-hidden="true"></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>5&quot;</strong></li>
+            <li class="meta">1 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/7471984" target="_blank" rel="noopener noreferrer">Tim Krog / The Boogey Man (Original 1980 Motion Picture Soundtrack) / One Way Static Records / Vinyl LP, 45 RPM, Album, Deluxe Edition, Limited Edition, Reissue; Vinyl 5&quot;, Single / 2015</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>7&quot;</strong></li>
+            <li class="meta">189 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1088814" target="_blank" rel="noopener noreferrer">Ad Nauseam / Brainstorm / Flicknife Records, Flicknife Records / Vinyl 7&quot;, EP, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1088814" target="_blank" rel="noopener noreferrer">Ad Nauseam / Brainstorm / Flicknife Records, Flicknife Records / Vinyl 7&quot;, EP, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2551455" target="_blank" rel="noopener noreferrer">Adolescents / Amoeba / Posh Boy / Vinyl 7&quot;, 45 RPM, Single Sided, Etched, Limited Edition / 1990</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/631106" target="_blank" rel="noopener noreferrer">Adolescents / Welcome To Reality / Frontier Records / Vinyl 7&quot;, 45 RPM, EP / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/890637" target="_blank" rel="noopener noreferrer">Agent Orange / Everything Turns Gray / Pipeline / Posh Boy / Vinyl 7&quot;, 45 RPM, Single / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1870912" target="_blank" rel="noopener noreferrer">Agent Orange / VD / Hello Boy Friend, Coming My Way ? / New Wave Records, New Wave Records / Vinyl 7&quot;, EP, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1889574" target="_blank" rel="noopener noreferrer">Agent Orange / Your Mother Sucks Cocks In Hell... / Graaf Hendrick Records / Vinyl 7&quot;, EP, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2044662" target="_blank" rel="noopener noreferrer">Anti Cimex / Raped Ass / A-Records (3) / Vinyl 7&quot;, 45 RPM, EP / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2414086" target="_blank" rel="noopener noreferrer">Armed Revolution / 10 -Track&#x27;s E.P. / Dan-Doh Records, Chaos Of Destruction Records (2) / Vinyl 7&quot;, 33 ⅓ RPM, EP, Limited Edition / 2000</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3553963" target="_blank" rel="noopener noreferrer">Avengers / We Are The One / Superior Viaduct / Vinyl 7&quot;, 45 RPM, EP, Limited Edition, Reissue / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1141822" target="_blank" rel="noopener noreferrer">B.G.K. / White Male Dumbinance / Not On Label (B.G.K.) / Vinyl 7&quot;, EP, Unofficial Release</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/924357" target="_blank" rel="noopener noreferrer">Barn Av Regnbuen / Det E&#x27;kje Nåkka Artig Længer / X-Port Plater / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/924368" target="_blank" rel="noopener noreferrer">Barn Av Regnbuen / Helter Og Skurker! / Barneplater / Flexi-disc 7&quot;, 45 RPM, EP / 1987</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3883106" target="_blank" rel="noopener noreferrer">Bastards / Maailma Palaa Ja Kuolee 10 Track E.P. / Propaganda Records / Vinyl 7&quot;, 45 RPM, EP, Repress / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1840931" target="_blank" rel="noopener noreferrer">Betong Hysteria / Spontan Abort / Mind Expanding Records / Vinyl 7&quot;, EP, 45 RPM / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/850534" target="_blank" rel="noopener noreferrer">Bone Awl / ...So I Must Take From The Earth And Make It My Own / Hospital Productions / 2x Vinyl 7&quot;, 33 ⅓ RPM / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/973092" target="_blank" rel="noopener noreferrer">Bone Awl / Undying Glare / Nuclear War Now! Productions / Vinyl 7&quot;, 33 ⅓ RPM, Single Sided, Limited Edition / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3519275" target="_blank" rel="noopener noreferrer">Bone Awl, Ashdautas / Bone Awl / Ashdautas / Klaxon / Vinyl LP; Vinyl 7&quot;, Single Sided; All Media Limited Edition / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/761533" target="_blank" rel="noopener noreferrer">Born Against / Born Against / Vermiform / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1990</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1200469" target="_blank" rel="noopener noreferrer">Born Against / My Country Tis Of Thee Enemy Of All Tribes / Not On Label (Born Against) / Vinyl 7&quot;, EP, 33 ⅓ RPM, White Label, Unofficial Release / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1752388" target="_blank" rel="noopener noreferrer">Broken Bones / Decapitated / Fallout Records, Scarlet Records / Vinyl 7&quot;, 45 RPM, Single / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8818461" target="_blank" rel="noopener noreferrer">Cadaver Dog / Blunt Force Trauma / Youth Attack / Flexi-disc 7&quot;, Limited Edition / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1250918" target="_blank" rel="noopener noreferrer">Career Suicide / Career Suicide / Kangaroo Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1250948" target="_blank" rel="noopener noreferrer">Career Suicide / SARS EP / Deranged Records / Vinyl 7&quot;, 45 RPM, EP / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1750248" target="_blank" rel="noopener noreferrer">Career Suicide / Signals EP / Way Back When Records, Even Worse Records / Vinyl 7&quot;, EP, 45 RPM, Picture Disc / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/22092271" target="_blank" rel="noopener noreferrer">Chaotic Dischord / Fuck The World EP / Riot City Records, Riot City Records / Vinyl 7&quot;, EP / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/383438" target="_blank" rel="noopener noreferrer">Chaotic Dischord / Never Trust A Friend / Riot City Records, Riot City Records / Vinyl 7&quot;, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1675313" target="_blank" rel="noopener noreferrer">Cheetah Chrome Motherfuckers / Four Hundred Fascists / Cessofonya Records / Vinyl 7&quot;, 45 RPM, Mono / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1069605" target="_blank" rel="noopener noreferrer">Cheetah Chrome Motherfuckers / Furious Party / Belfagor Records / Vinyl 7&quot;, EP, 45 RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11003785" target="_blank" rel="noopener noreferrer">Chemotherapy / Chemotherapy / Time Change Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Reissue, Remastered / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3772511" target="_blank" rel="noopener noreferrer">Chemotherapy / Chemotherapy / Uprising Records (14) / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2822578" target="_blank" rel="noopener noreferrer">Complaints / Complaints / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1589993" target="_blank" rel="noopener noreferrer">Confuse / Nuclear Addicts E.P. / Violent Party Records, Blue Jug Records / Flexi-disc 7&quot;, 33 ⅓ RPM, EP / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10598774" target="_blank" rel="noopener noreferrer">Confuse / Spending Loud Night / Confuse Records, Confuse Records, King&#x27;s World Records / Vinyl 7&quot;, 33 ⅓ RPM, 45 RPM, Misprint / 1987</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13446129" target="_blank" rel="noopener noreferrer">Crass / How Does It Feel- / Crass Records / Vinyl 7&quot;, 45 RPM / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2633794" target="_blank" rel="noopener noreferrer">Crossed Out / Crossed Out / Not On Label (Crossed Out) / Vinyl 7&quot;, 33 ⅓ RPM, EP, Unofficial Release</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1846156" target="_blank" rel="noopener noreferrer">Crudity / The Total End / Not On Label / Vinyl 7&quot;, Unofficial Release, Repress, Numbered</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4264672" target="_blank" rel="noopener noreferrer">Cult Ritual / Cult Ritual / Burrito Records (2) / Vinyl 7&quot;, 45 RPM / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1919573" target="_blank" rel="noopener noreferrer">Cult Ritual / Cult Ritual / Youth Attack / Vinyl 7&quot;, EP, Repress, Limited Edition / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3688153" target="_blank" rel="noopener noreferrer">Dead Kennedys / Holiday In Cambodia / Police Truck / I.R.S. Records / Vinyl 7&quot;, 45 RPM, Single, Repress / 1980</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1668904" target="_blank" rel="noopener noreferrer">Deep Wound / Deep Wound / Radiobeat Records / Vinyl 7&quot;, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1852243" target="_blank" rel="noopener noreferrer">Deep Wound / Deep Wound / Radiobeat Records (2) / Vinyl 7&quot;, 45 RPM, Limited Edition, Reissue, Unofficial Release / 1991</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1517218" target="_blank" rel="noopener noreferrer">Defector / パンクシステムデストロイ (Punk System Destroy) / Crust War / Vinyl 7&quot;, 45 RPM, EP / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/814904" target="_blank" rel="noopener noreferrer">Dezerter / Ku Przyszłości / Tonpress / Vinyl 7&quot;, 45 RPM, EP, Stereo / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1682684" target="_blank" rel="noopener noreferrer">Disclose / 4 Track E.P. / Overthrow Records / Vinyl 7&quot;, 45 RPM, EP, White Label / 1997</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160272" target="_blank" rel="noopener noreferrer">Disclose / A Mass Of Raw Sound Assault / MCR Company / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2001</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1450944" target="_blank" rel="noopener noreferrer">Disclose / A Mass Of Raw Sound Assault / MCR Company / Vinyl 7&quot;, 33 ⅓ RPM, EP, Repress / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1450928" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Continues / Overthrow Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6674064" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Of Death / Regurgitated Semen Records / Vinyl 7&quot;, Reissue / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1450970" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Of Death / Regurgitated Semen Records / Vinyl 7&quot;, 33 ⅓ RPM, Reissue / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1450970" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Of Death / Regurgitated Semen Records / Vinyl 7&quot;, 33 ⅓ RPM, Reissue / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3866796" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Of Death / Regurgitated Semen Records / Vinyl 7&quot;, Reissue / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1450919" target="_blank" rel="noopener noreferrer">Disclose / Neverending War / Dan-Doh Records, Dan-Doh Records / Vinyl 7&quot;, 45 RPM / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2469312" target="_blank" rel="noopener noreferrer">Disclose / Once The War Started... / Overthrow Records / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160265" target="_blank" rel="noopener noreferrer">Disclose / The Nuclear Victims / Whisper In Darkness / Vinyl 7&quot;, 45 RPM, Compilation, White Label / 2000</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2083748" target="_blank" rel="noopener noreferrer">Disclose / The Nuclear Victims / Whisper In Darkness / Vinyl 7&quot;, 45 RPM, Compilation / 2000</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1431578" target="_blank" rel="noopener noreferrer">Disclose / The Sound Of Disaster / No Fashion HC Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Limited Edition, Reissue / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2078594" target="_blank" rel="noopener noreferrer">Disclose / Visions Of War / Distortion Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Picture Disc / 1996</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3956183" target="_blank" rel="noopener noreferrer">Disclose, Besthöven / Dis Nightmare Still Continues / A Way To The Total End... / Cries Of Pain / Vinyl 7&quot;, 33 ⅓ RPM, Reissue / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160291" target="_blank" rel="noopener noreferrer">Disclose, Besthöven / Dis Nightmare Still Continues / A Way To The Total End... / Plague Bearer Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160207" target="_blank" rel="noopener noreferrer">Disclose, Cluster Bomb Unit / War Of Aggression / Cluster Bomb Unit / MCR Company / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2469527" target="_blank" rel="noopener noreferrer">Disclose, Cruelty / Controlled By Fear / Cruelty / Dan-Doh Records / Vinyl 7&quot;, EP, 33 ⅓ RPM / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1589453" target="_blank" rel="noopener noreferrer">Disclose, Cruelty / Controlled By Fear / Cruelty / Final Attempt Records, Room 101 Records / Vinyl 7&quot;, 33 ⅓ RPM, Limited Edition / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1452062" target="_blank" rel="noopener noreferrer">Disclose, Cruelty / Controlled By Fear / Cruelty / Plague Bearer Records / Vinyl 7&quot;, 33 ⅓ RPM / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2432849" target="_blank" rel="noopener noreferrer">Disclose, Flyblown / In Chaos We Trust / On The Verge Records, Never Healed / Vinyl 7&quot;, 45 RPM, EP / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1448191" target="_blank" rel="noopener noreferrer">Disclose, Framtid / Chainsawsplit-04 / Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1724339" target="_blank" rel="noopener noreferrer">Disclose, Framtid / Chainsawsplit-04 / Regurgitated Semen Records, Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM, Reissue / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4086799" target="_blank" rel="noopener noreferrer">Disclose, Framtid / Chainsawsplit-04 / Regurgitated Semen Records, Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM, Reissue / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6662713" target="_blank" rel="noopener noreferrer">Disclose, Framtid / Chainsawtour-04 / Whisper In Darkness / Vinyl 7&quot;, Limited Edition / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1259408" target="_blank" rel="noopener noreferrer">Disclose, Framtid / Chainsawtour-04 / Whisper In Darkness / Vinyl 7&quot; / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2429805" target="_blank" rel="noopener noreferrer">Disclose, G.A.T.E.S. / Nuclear Hell / Black Plague / Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1895127" target="_blank" rel="noopener noreferrer">Disclose, Hellkrusher / Blood Sucking Freaks III / Blood Sucker Records / Vinyl 7&quot; / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160216" target="_blank" rel="noopener noreferrer">Disclose, Hellkrusher / Blood Sucking Freaks III / Blood Sucker Records, Blood Sucker Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1011813" target="_blank" rel="noopener noreferrer">Disclose, Homomilitia / Attack The Enemy / Milczenie = Śmierć / Scream Records (2) / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160193" target="_blank" rel="noopener noreferrer">Disclose, Insane Youth / Kochi-City Hardcore / MCR Company, MCR Company / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1448158" target="_blank" rel="noopener noreferrer">Disclose, No Fucker / Disclose / No Fucker / Overthrow Records / Vinyl 7&quot;, 33 ⅓ RPM / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1448158" target="_blank" rel="noopener noreferrer">Disclose, No Fucker / Disclose / No Fucker / Overthrow Records / Vinyl 7&quot;, 33 ⅓ RPM / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1447585" target="_blank" rel="noopener noreferrer">Disclose, No Fucker / Noise Not Music / Hemorrhaging Loudness / Vinyl 7&quot;, 45 RPM / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6249792" target="_blank" rel="noopener noreferrer">Disclose, Scarred For Life / Gray Earth / Scarred For Life / Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2873560" target="_blank" rel="noopener noreferrer">Disclose, Scarred For Life / Gray Earth / Scarred For Life / Dan-Doh Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1448210" target="_blank" rel="noopener noreferrer">Disclose, World Burns To Death / Disclose / World Burns To Death / Dan-Doh Records / Vinyl 7&quot;, 45 RPM / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/905149" target="_blank" rel="noopener noreferrer">Disclose, World Burns To Death / Disclose / World Burns To Death / Yellow Dog Records / Vinyl 7&quot;, 45 RPM / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4032468" target="_blank" rel="noopener noreferrer">EyeHateGod / Ruptured Heart Theory / Bovine Records, Bovine Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Repress / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1668168" target="_blank" rel="noopener noreferrer">Fader War / Norway Hardcore 1982 / Not On Label (Fader War) / Vinyl 7&quot;, EP, 33 ⅓ RPM, White Label, Unofficial Release / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/412843" target="_blank" rel="noopener noreferrer">Filth / Live The Chaos / Lookout! Records / Vinyl 7&quot;, 45 RPM, EP, Repress / 1992</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1032236" target="_blank" rel="noopener noreferrer">Furdidurke, Bone Awl / Furdidurke / Bone Awl / Not On Label (Furdidurke Self-released) / Vinyl 7&quot;, 33 ⅓ RPM, Limited Edition, White Label / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1503179" target="_blank" rel="noopener noreferrer">Ghoul / Oi! Oi! / Hold Up Records / Flexi-disc 7&quot;, 45 RPM, Single Sided / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13173815" target="_blank" rel="noopener noreferrer">Homeless Cadaver / Fat Skeleton / Iron Lung Records / Vinyl 7&quot;, 45 RPM, EP / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5612696" target="_blank" rel="noopener noreferrer">Infest / Days Turn Black / Draw Blank Records / Vinyl 7&quot;, 45 RPM, Single Sided, EP, Limited Edition, White Label / 2013</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3438565" target="_blank" rel="noopener noreferrer">Infest / Not Over Yet / Not On Label (Infest) / Vinyl Unofficial Release, 7&quot; / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2221627" target="_blank" rel="noopener noreferrer">Junk Schizo / Crime Of Existence / AA Records (2) / Vinyl 7&quot;, 33 ⅓ RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3022954" target="_blank" rel="noopener noreferrer">Junk Schizo / Pity To The Ignorant / Doom Records (3) / Vinyl 7&quot;, 33 ⅓ RPM / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1652953" target="_blank" rel="noopener noreferrer">Kriegshög / Hardcore Hell / HeartFirst Records / Vinyl 7&quot;, EP, 45 RPM, Reissue / 2008</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10267116" target="_blank" rel="noopener noreferrer">Lebenden Toten / At The Window / Wyrd War, Not On Label (Lebenden Toten Self-released) / Flexi-disc 7&quot;, 33 ⅓ RPM, Shape, Single Sided / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10267116" target="_blank" rel="noopener noreferrer">Lebenden Toten / At The Window / Wyrd War, Not On Label (Lebenden Toten Self-released) / Flexi-disc 7&quot;, 33 ⅓ RPM, Shape, Single Sided / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1501202" target="_blank" rel="noopener noreferrer">Lebenden Toten / Nuclear Flowers EP / Wicked Witch Records / Vinyl 7&quot;, 45 RPM, EP / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1501202" target="_blank" rel="noopener noreferrer">Lebenden Toten / Nuclear Flowers EP / Wicked Witch Records / Vinyl 7&quot;, 45 RPM, EP / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15045702" target="_blank" rel="noopener noreferrer">Life Support / Die Like A Man / Youth Attack / Vinyl 7&quot;, EP, Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15046142" target="_blank" rel="noopener noreferrer">Life Support / Die Like A Man / Youth Attack / Vinyl 7&quot;, EP, Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15039448" target="_blank" rel="noopener noreferrer">Life Support / Die Like A Man / Youth Attack / Vinyl 7&quot;, Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/14890545" target="_blank" rel="noopener noreferrer">Life Support / Die Like A Man / Youth Attack / Vinyl 7&quot;, Deluxe Edition, Test Pressing / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1676396" target="_blank" rel="noopener noreferrer">Malefice / Overboard E.P. / DSI Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9903937" target="_blank" rel="noopener noreferrer">Malefice / Overboard E.P. / DSI Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Reissue, Test Pressing / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2016233" target="_blank" rel="noopener noreferrer">Malefice / Overboard E.P. / DSI Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Reissue / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2474057" target="_blank" rel="noopener noreferrer">Men&#x27;s Interest / More War / Home Invasion Records / Vinyl 7&quot;, 33 ⅓ RPM / 2010</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/517098" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Botanica Mysteria / Kill Rock Stars / Vinyl 7&quot;, 45 RPM / 1996</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1906500" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Emergency / Lungcast Records / Vinyl 7&quot;, 45 RPM / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6303120" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Immense Ovary Reject / Walkabout, Paralogy / Vinyl 7&quot; / 1996</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1036939" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Make A Baby / Vermiform / Vinyl 7&quot;, 45 RPM / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1036956" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Normal Man / Gravity (2) / Vinyl 7&quot;, 33 ⅓ RPM, 45 RPM / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5229098" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Thank You For Killing Me / Paralogy / Vinyl 7&quot;, 33 ⅓ RPM, 45 RPM, Picture Disc / 1997</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1627933" target="_blank" rel="noopener noreferrer">Merciless / Behind The Black Door / Iron Fist Productions / Vinyl 7&quot;, 33 ⅓ RPM, Reissue, White Label / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1648189" target="_blank" rel="noopener noreferrer">Merciless / Realm Of The Dark / Iron Fist Productions / Vinyl 7&quot;, 33 ⅓ RPM, EP, Reissue / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6355886" target="_blank" rel="noopener noreferrer">Misfits / Bullet / Not On Label (Misfits) / Vinyl 7&quot;, 45 RPM, EP, Reissue, Unofficial Release, White Label / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12874623" target="_blank" rel="noopener noreferrer">Misfits / Halloween / Plan 9 (2) / Vinyl 7&quot;, 45 RPM, Single, Reissue, Unofficial Release, White Label / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5919807" target="_blank" rel="noopener noreferrer">Misfits / Horror Business / Not On Label (Misfits) / Vinyl 7&quot;, 45 RPM, EP, Reissue, Unofficial Release, White Label / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12083759" target="_blank" rel="noopener noreferrer">Misfits / Night Of The Living Dead / Plan 9 (2) / Vinyl 7&quot;, 45 RPM, EP, Reissue, Unofficial Release, White Label</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1668786" target="_blank" rel="noopener noreferrer">Mobs / Diabolism / Noise Room Records / Vinyl 7&quot;, 33 ⅓ RPM / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1668786" target="_blank" rel="noopener noreferrer">Mobs / Diabolism / Noise Room Records / Vinyl 7&quot;, 33 ⅓ RPM / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2429979" target="_blank" rel="noopener noreferrer">Mobs / Projection Of Astral Body / Noise Room Records / Vinyl 7&quot;, 33 ⅓ RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/379893" target="_blank" rel="noopener noreferrer">Mütiilation / Hail Satanas We Are The Black Legions / Not On Label (Mütiilation Self-released) / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2690687" target="_blank" rel="noopener noreferrer">Nazti Skinz / Sic Semper Tyrannis / Youth Attack / Vinyl 7&quot;, EP / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2690687" target="_blank" rel="noopener noreferrer">Nazti Skinz / Sic Semper Tyrannis / Youth Attack / Vinyl 7&quot;, EP / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1230939" target="_blank" rel="noopener noreferrer">Necros / Conquest For Death / Touch And Go / Vinyl 7&quot;, Single / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1576532" target="_blank" rel="noopener noreferrer">Neos / End All Discrimination / Alandhiscar Records / Vinyl 7&quot;, 33 ⅓ RPM / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2440187" target="_blank" rel="noopener noreferrer">Neos / Fight With Donald / Break Even Records, Schizophrenic Records (2) / Vinyl 7&quot;, 33 ⅓ RPM, EP, Numbered / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/879440" target="_blank" rel="noopener noreferrer">Neos / Hassibah Gets The Martian Brain Squeeze / Rat Cage Records / Vinyl 7&quot;, 45 RPM, EP, Repress / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/641626" target="_blank" rel="noopener noreferrer">Nerorgasmo / Nerorgasmo / Babby Records / Vinyl 7&quot;, 45 RPM, EP / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/381825" target="_blank" rel="noopener noreferrer">Omega Tribe / Angry Songs / Crass Records / Vinyl 7&quot;, 45 RPM, EP / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1779069" target="_blank" rel="noopener noreferrer">Proces, Stengte Dører / Splitt EP / X-port Plater, X-port Plater / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8069881" target="_blank" rel="noopener noreferrer">Rhythm Pigs / An American Activity / Unclean Records, Unclean Records / Vinyl 7&quot;, 45 RPM, Repress</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1366793" target="_blank" rel="noopener noreferrer">Rorschach, Neanderthal / Rorschach / Neanderthal / Vermiform / Vinyl 7&quot;, 45 RPM / 1991</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/380836" target="_blank" rel="noopener noreferrer">Rudimentary Peni / Farce / Crass Records / Vinyl 7&quot;, EP, 45 RPM / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12462732" target="_blank" rel="noopener noreferrer">Rudimentary Peni / Rudimentary Peni / Outer Himalayan Records / Vinyl 7&quot;, EP, Mispress, Repress / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1008334" target="_blank" rel="noopener noreferrer">Rudimentary Peni / The Underclass / Outer Himalayan Records, Outer Himalayan Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 2000</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/27146748" target="_blank" rel="noopener noreferrer">Salvation / House Of The Beating Hell / Youth Attack / Vinyl 7&quot;, Numbered, Test Pressing / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3559069" target="_blank" rel="noopener noreferrer">Salvation / House Of The Beating Hell / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4335124" target="_blank" rel="noopener noreferrer">Salvation / Smoke And Mirrors / Youth Attack / Vinyl 7&quot;, 45 RPM, EP, Repress / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1328779" target="_blank" rel="noopener noreferrer">Salvation / Smoke And Mirrors / Youth Attack / Vinyl 7&quot;, 45 RPM, EP / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9412391" target="_blank" rel="noopener noreferrer">Samhain / A Bucket Of Blood / FUNN / Vinyl 7&quot;, Unofficial Release, Limited Edition, White Label / 1988</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4040798" target="_blank" rel="noopener noreferrer">Samhain / On Earth As It Is In Hell / Not On Label (Samhain) / Vinyl 7&quot;, Repress, Unofficial Release / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3456269" target="_blank" rel="noopener noreferrer">Scapegoat / Scapegoat / Painkiller Records (2) / Vinyl 7&quot;, 45 RPM / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1431594" target="_blank" rel="noopener noreferrer">Scarred For Life, Disclose / Scarred For Life / Disclose / Despotic Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Reissue / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1430923" target="_blank" rel="noopener noreferrer">Selfish, Disclose / Selfish / No More Pain! / D.I.Y. Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Remastered, Repress / 1996</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/367652" target="_blank" rel="noopener noreferrer">Septic Death / Kichigai / Pusmort / Vinyl 7&quot;, 45 RPM / 1988</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4204324" target="_blank" rel="noopener noreferrer">Sex Vid / Tania EP / Dom America / Vinyl 7&quot;, 45 RPM, EP, Repress / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1523154" target="_blank" rel="noopener noreferrer">Shitlickers / GBG 1982 / Cracked Cop Skulls / Not On Label / Vinyl 7&quot;, 33 ⅓ RPM, EP, Limited Edition, Unofficial Release, White Label / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11483287" target="_blank" rel="noopener noreferrer">Skeleton / What Will You Do? / Cries Of Pain / Vinyl 7&quot;, Numbered / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15045533" target="_blank" rel="noopener noreferrer">Snarling Hate / How To Kill / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15053085" target="_blank" rel="noopener noreferrer">Snarling Hate / How To Kill / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/14886533" target="_blank" rel="noopener noreferrer">Snarling Hate / How To Kill / Youth Attack / Vinyl 7&quot;, EP, Test Pressing / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2242862" target="_blank" rel="noopener noreferrer">Society Nurse / Junk Existence EP / Iron Lung Records / Vinyl 7&quot;, 45 RPM, EP, Limited Edition / 2010</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/408713" target="_blank" rel="noopener noreferrer">Spastic Rats / Rodentia / Vermin Scum Records / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2160246" target="_blank" rel="noopener noreferrer">Squandered, Disclose / Squandered. / Endless War / No Fashion HC Records / Vinyl 7&quot;, EP, 33 ⅓ RPM, Reissue / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2225652" target="_blank" rel="noopener noreferrer">Stigmathe / Lo Sguardo Dei Morti / Meccano Records, Stigmathe / Vinyl 7&quot;, 45 RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4686244" target="_blank" rel="noopener noreferrer">Stigmathe / Suoni Puri Dalla Libertà / No Plan Records / Vinyl 7&quot;, 45 RPM, EP, Reissue / 2013</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/916341" target="_blank" rel="noopener noreferrer">Svart Framtid / 1984 / X-Port Plater, X-Port Plater / Vinyl 7&quot;, EP, 33 ⅓ RPM / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2887037" target="_blank" rel="noopener noreferrer">Svart Framtid / 1984 Ep / Voltage Records (2) / Vinyl 7&quot;, EP, 33 ⅓ RPM, Reissue / 2011</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4384213" target="_blank" rel="noopener noreferrer">Talk Is Poison / Straight To Hell / Prank / Vinyl 7&quot;, 45 RPM, EP, Repress / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/408718" target="_blank" rel="noopener noreferrer">Teenage Jesus And The Jerks / Orphans / Migraine / Vinyl 7&quot;, 45 RPM, Single / 1978</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1669050" target="_blank" rel="noopener noreferrer">The Execute / An Omen Of Fear EP / Selfish Records / Vinyl 7&quot;, 45 RPM, EP, Stereo / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1707118" target="_blank" rel="noopener noreferrer">The Groinoids / Radiobeat Sessions / Fatalist, Bostons Finest / Vinyl 7&quot;, 45 RPM / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2000813" target="_blank" rel="noopener noreferrer">The Scam / Everything Ends In Rot / Ax/ction Records / Vinyl 7&quot;, 33 ⅓ RPM, Limited Edition, Numbered / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/383445" target="_blank" rel="noopener noreferrer">Ultra Violent / Crime... For... Revenge / Riot City Records / Vinyl 7&quot;, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5766807" target="_blank" rel="noopener noreferrer">United Mutation / Fugitive Family / DSI Records, Dischord Records / Vinyl 7&quot;, 45 RPM, EP, Reissue / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2579757" target="_blank" rel="noopener noreferrer">United Mutation / Götterdämmerung / Lost And Found Records / Vinyl 7&quot; / 1991</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1508259" target="_blank" rel="noopener noreferrer">United Mutation / Kyo Ki / Lost And Found Records / Vinyl 7&quot;, 33 ⅓ RPM / 1990</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2233050" target="_blank" rel="noopener noreferrer">Vains / You May Not Believe In Vains But You Cannot Deny Terror / No Threes Records / Vinyl 7&quot;, 45 RPM / 1980</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/550505" target="_blank" rel="noopener noreferrer">Various / Murder / Alamut Records / 2x Vinyl 7&quot;, 45 RPM / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/800808" target="_blank" rel="noopener noreferrer">Various / Putrid Evil E.P. / Not On Label / Flexi-disc 7&quot;, 33 ⅓ RPM, Single Sided, EP, Compilation / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1745872" target="_blank" rel="noopener noreferrer">Various / Unsafe At Any Speed / Modern Method Records, Modern Method Records / Vinyl 7&quot;, EP, 33 ⅓ RPM, Compilation / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1964404" target="_blank" rel="noopener noreferrer">Various / We Still Can&#x27;t Help It If We&#x27;re From Florida / Burrito Records (2) / Vinyl 7&quot;, EP, 33 ⅓ RPM, Compilation, Repress / 1992</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1964404" target="_blank" rel="noopener noreferrer">Various / We Still Can&#x27;t Help It If We&#x27;re From Florida / Burrito Records (2) / Vinyl 7&quot;, EP, 33 ⅓ RPM, Compilation, Repress / 1992</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/19095937" target="_blank" rel="noopener noreferrer">Veil II / Negative Space / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition, Test Pressing / 2021</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/19095925" target="_blank" rel="noopener noreferrer">Veil II / Negative Space / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition / 2021</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3104677" target="_blank" rel="noopener noreferrer">Veins / Veins / Youth Attack / Vinyl 7&quot;, 45 RPM, Limited Edition, Repress / 2011</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13018662" target="_blank" rel="noopener noreferrer">Vile / Vile Says Fuck Off! / Radio Raheem / Vinyl 7&quot;, 45 RPM / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3073271" target="_blank" rel="noopener noreferrer">Vile Gash / Deluded / Youth Attack / Vinyl 7&quot;, 45 RPM, EP / 2011</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2206998" target="_blank" rel="noopener noreferrer">Vile Gash / Vile Gash / Youth Attack / Vinyl 7&quot;, 45 RPM, EP / 2010</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/598466" target="_blank" rel="noopener noreferrer">Vorkriegsphase / Scheiss Krieg EP / Rock-O-Rama Records / Vinyl 7&quot;, EP, 45 RPM / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1998285" target="_blank" rel="noopener noreferrer">Waste Management / Get Your Mind Right E.P. / Painkiller Records (2) / Vinyl 7&quot;, EP, 33 ⅓ RPM / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3960742" target="_blank" rel="noopener noreferrer">White Cross / Fascist / Zero Degree Records / Vinyl 7&quot;, 45 RPM, EP / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4158894" target="_blank" rel="noopener noreferrer">White Pigs / Hit Bonanza / Super Seven Records / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5973804" target="_blank" rel="noopener noreferrer">White Pigs / Live: Evil Stalks The Innocent / Songs Of Sin Records / Vinyl 7&quot;, 33 ⅓ RPM / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2074459" target="_blank" rel="noopener noreferrer">White Pigs / White Pigs / Swinch Kwilsen Record Productions / Vinyl 7&quot;, 33 ⅓ RPM, EP / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/932441" target="_blank" rel="noopener noreferrer">Winterswijx Chaos Front / Winterswijx Chaos Front / Noise And Distortion Records / Vinyl 7&quot;, 33 ⅓ RPM, EP, Limited Edition, Reissue / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2292509" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Untitled / Wrangler Brutes Records / Vinyl 7&quot;, 45 RPM, Single Sided, White Label / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2822500" target="_blank" rel="noopener noreferrer">YDI / A Place In The Sun E.P. / Reagan Era HC / Vinyl 7&quot;, 33 ⅓ RPM, EP, Unofficial Release, White Label</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2766469" target="_blank" rel="noopener noreferrer">Üäïÿ¨Båaîoøhøiø / War Madness EP / Not On Label (Üäïÿ¨Båaîoøhøiø Self-released) / Vinyl 7&quot;, 33 ⅓ RPM, White Label / 2007</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>8&quot;</strong></li>
+            <li class="meta">3 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1367329" target="_blank" rel="noopener noreferrer">Lebenden Toten / Death Culture Deprivation / Overthrow Records / Vinyl 8&quot;, 45 RPM, EP / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1969766" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Wrangler Brutes / Clarence Thomas Records / 2x Vinyl 8&quot;, 45 RPM, Reissue / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1969766" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Wrangler Brutes / Clarence Thomas Records / 2x Vinyl 8&quot;, 45 RPM, Reissue / 2005</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>10&quot;</strong></li>
+            <li class="meta">7 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1188428" target="_blank" rel="noopener noreferrer">Altar Of Perversion / Adgnosco Veteris Vestigia Flammae / The Ajna Offensive / Vinyl 10&quot;, 33 ⅓ RPM, EP / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5233304" target="_blank" rel="noopener noreferrer">Born Against / Battle Hymns Of The Race War / Vermiform, Vermiform / Vinyl 10&quot;, 33 ⅓ RPM, Repress / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2950152" target="_blank" rel="noopener noreferrer">Disclose / Great Swedish Feast / Overthrow Records / Vinyl 10&quot;, 33 ⅓ RPM, White Label / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2161149" target="_blank" rel="noopener noreferrer">Disclose / The Aspects Of War / F.F.T. Label / Vinyl 10&quot;, 45 RPM, EP / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2161109" target="_blank" rel="noopener noreferrer">G.A.T.E.S., Disclose / Black Plague / Nuclear Hell / Plague Bearer Records / Vinyl 10&quot;, 45 RPM, EP, Reissue / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1008369" target="_blank" rel="noopener noreferrer">Rudimentary Peni / Archaic EP / Outer Himalayan Records / Vinyl 10&quot;, 45 RPM, EP / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/19525573" target="_blank" rel="noopener noreferrer">Wind Hearse / Trident / Klaxon / Vinyl 10&quot;, 45 RPM, Mini-Album, Limited Edition, Remastered, Stereo / 2021</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>12&quot;</strong></li>
+            <li class="meta">127 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/619695" target="_blank" rel="noopener noreferrer">Adolescents / Adolescents / Frontier Records / Vinyl LP, Album / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/7376295" target="_blank" rel="noopener noreferrer">Agent Orange / Demo&#x27;s And More / Gummopunx Records / Vinyl LP, Album, Limited Edition, Repress, Stereo / 2015</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/385506" target="_blank" rel="noopener noreferrer">Bad Brains / Rock For Light / PVC Records / Vinyl LP, Album / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/578959" target="_blank" rel="noopener noreferrer">Black Flag / Jealous Again / SST Records / Vinyl 12&quot;, 45 RPM, EP / 1980</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12415881" target="_blank" rel="noopener noreferrer">Bone Awl / Almost Dead Man / Klaxon / Vinyl 12&quot;, 45 RPM, Reissue, Remastered / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15676866" target="_blank" rel="noopener noreferrer">Bone Awl / An Obelisk Marks The Line / Klaxon, Klaxon / Vinyl LP, Album; Vinyl 12&quot;, 33 ⅓ RPM, Reissue, Remastered / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11568829" target="_blank" rel="noopener noreferrer">Cadaver Dog / Dying Breed / Youth Attack / Vinyl LP, 45 RPM, Album / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11568846" target="_blank" rel="noopener noreferrer">Cadaver Dog / Dying Breed / Youth Attack / Vinyl LP, 45 RPM, Album, Deluxe Edition, Test Pressing / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/35320570" target="_blank" rel="noopener noreferrer">Carnivorous Bells / Beacons In Limbo / Human Headstone Presents / Vinyl LP / 2025</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9907999" target="_blank" rel="noopener noreferrer">Celtic Frost / To Mega Therion / Combat / Vinyl LP, Album, Stereo / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10149505" target="_blank" rel="noopener noreferrer">Charles Manson / Lie, The Love and Terror Cult / ESP-Disk&#x27; / Vinyl LP, Album, Reissue / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1906768" target="_blank" rel="noopener noreferrer">Cheetah Chrome Motherfuckers, I Refuse It! / Permanent Scar / Children Of The Revolution Records / Vinyl LP, Remastered, Reissue / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2439302" target="_blank" rel="noopener noreferrer">Circle Jerks / Group Sex / Frontier Records, Frontier Records / Vinyl LP, Album, Repress / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12809475" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl 12&quot;, 45 RPM, Album, Limited Edition / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12856593" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12837448" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM, Limited Edition / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12830547" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl 12&quot;, 45 RPM, Album, Picture Disc / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12846914" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl 12&quot;, 45 RPM, Album / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13220394" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM, Album, Limited Edition / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13240732" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM, Album, Limited Edition, Repress, Stereo / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13194468" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM, Limited Edition, Repress, Stereo / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12837448" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Youth Attack / Vinyl LP, 45 RPM, Limited Edition / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12749023" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood: &#x27;Reflection of Fear&#x27; / Youth Attack / Vinyl LP, Limited Edition, Test Pressing / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10068582" target="_blank" rel="noopener noreferrer">Civilized / Chopping Block / Youth Attack / Vinyl 12&quot;, 45 RPM / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2180965" target="_blank" rel="noopener noreferrer">Cold Sweat / Blinded / Manic Ride Records / Vinyl LP, Album / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2553123" target="_blank" rel="noopener noreferrer">Cold Sweat / Severed Ties / Rock &amp; Roleplay Records, Rock &amp; Roleplay Records / Vinyl 12&quot;, 45 RPM / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1543597" target="_blank" rel="noopener noreferrer">Confuse / Old God Meet New God / Absolute Power / Vinyl LP, Unofficial Release</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1677510" target="_blank" rel="noopener noreferrer">Confuse / Stupid Life / King&#x27;s World Records / Vinyl 12&quot;, 45 RPM, EP / 1991</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9441643" target="_blank" rel="noopener noreferrer">Country Club / Brothers / Breathing Problem Productions / Vinyl 12&quot;, 45 RPM, Reissue, Remastered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/379146" target="_blank" rel="noopener noreferrer">Crucifix / Dehumanization / Corpus Christi / Vinyl LP, Album / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10068502" target="_blank" rel="noopener noreferrer">Culture Shock / Culture Shock / Youth Attack / Vinyl 12&quot;, 45 RPM / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13243902" target="_blank" rel="noopener noreferrer">Czarface, Ghostface Killah / Czarface Meets Ghostface / Silver Age, Silver Age, Silver Age, Silver Age, Urban Iconz, Urban Iconz, Urban Iconz, Urban Iconz, Get On Down, Get On Down, Get On Down, Get On Down / Box Set Deluxe Edition; Vinyl LP, Album, Limited Edition; Vinyl LP, Album, Limited Edition; CD Album; CD Album, Limited Edition / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13243902" target="_blank" rel="noopener noreferrer">Czarface, Ghostface Killah / Czarface Meets Ghostface / Silver Age, Silver Age, Silver Age, Silver Age, Urban Iconz, Urban Iconz, Urban Iconz, Urban Iconz, Get On Down, Get On Down, Get On Down, Get On Down / Box Set Deluxe Edition; Vinyl LP, Album, Limited Edition; Vinyl LP, Album, Limited Edition; CD Album; CD Album, Limited Edition / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2317752" target="_blank" rel="noopener noreferrer">D.O.A. / War On 45 / Alternative Tentacles / Vinyl 12&quot;, 45 RPM, EP, Repress / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5515863" target="_blank" rel="noopener noreferrer">David Hess / The Last House On The Left (Original 1972 Motion Picture Soundtrack) / One Way Static Records / Vinyl LP, Record Store Day, Limited Edition, Numbered, Picture Disc / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5528261" target="_blank" rel="noopener noreferrer">Death / Leprosy / Relapse Records / Vinyl LP, Album, Picture Disc, Reissue, Remastered / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2432833" target="_blank" rel="noopener noreferrer">Disclose / Apocalypse Of Death / Dan-Doh Records / Vinyl 12&quot;, EP, 45 RPM / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1451054" target="_blank" rel="noopener noreferrer">Disclose / Nightmare Or Reality / MCR Company / Vinyl 12&quot;, 45 RPM / 1999</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/488393" target="_blank" rel="noopener noreferrer">Disclose / No More Pain / Your Own Jailer Records / Vinyl LP, Compilation, White Label, Remastered / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2161561" target="_blank" rel="noopener noreferrer">Disclose / The Demo&#x27;s Album / Love &amp; Hope Records / Vinyl LP, Album, Compilation / 1995</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1548410" target="_blank" rel="noopener noreferrer">Disclose / Tragedy / Your Own Jailer Records, Lazy Records (2) / Vinyl LP, Album, Reissue / 1997</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2901144" target="_blank" rel="noopener noreferrer">Disclose / Tragedy / Your Own Jailer Records, Your Own Jailer Records / Vinyl LP, Album, Reissue, Repress, White Label</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6674709" target="_blank" rel="noopener noreferrer">Disclose / Yesterday&#x27;s Fairytale, Tomorrow&#x27;s Nightmare / Game Of The Arseholes / Vinyl LP, Album, Limited Edition, Numbered / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/426667" target="_blank" rel="noopener noreferrer">Disclose / Yesterday&#x27;s Fairytale, Tomorrow&#x27;s Nightmare / Game Of The Arseholes / Vinyl LP, Album / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2830991" target="_blank" rel="noopener noreferrer">Disclose, Hakuchi / Once The War Started / The Age Of Confusion / Love &amp; Hope Records / Vinyl LP, Compilation / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9997831" target="_blank" rel="noopener noreferrer">Dreamdecay / Yú / Iron Lung Records / Vinyl LP, Numbered, Test Pressing / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9917193" target="_blank" rel="noopener noreferrer">Dreamdecay / Yú / Iron Lung Records / Vinyl LP, Limited Edition / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6608194" target="_blank" rel="noopener noreferrer">DYS / Brotherhood / Taang! Records / Vinyl LP, Album, Reissue / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13657140" target="_blank" rel="noopener noreferrer">Dzlvarv / Dzlvarv / Drakkar Productions / Vinyl LP, Limited Edition, Reissue, Remastered / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2163004" target="_blank" rel="noopener noreferrer">Faith, Void / The Faith / Void / Dischord Records, Dischord Records / Vinyl LP, Album, Reissue / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5205295" target="_blank" rel="noopener noreferrer">Francesco De Masi / The New York Ripper / Death Waltz Recording Company / Vinyl LP, Reissue, Stereo / 2013</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1261690" target="_blank" rel="noopener noreferrer">Frustration / Relax / Born Bad Records / Vinyl LP, Album / 2008</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1256324" target="_blank" rel="noopener noreferrer">G.I.S.M. / Detestation / Dogma Records (2) / Vinyl Mini-Album, 45 RPM, 12&quot; / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11297391" target="_blank" rel="noopener noreferrer">Gauze / Fuck Heads / XXX Records (2) / Vinyl LP, 45 RPM, Album, Reissue / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11297422" target="_blank" rel="noopener noreferrer">Gauze / 限界は何処だ / XXX Records (2) / Vinyl LP, Album, Reissue / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11297358" target="_blank" rel="noopener noreferrer">Gauze / 面を洗って出直して来い / XXX Records (2) / Vinyl 12&quot;, 45 RPM, Reissue / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3365305" target="_blank" rel="noopener noreferrer">Germs / (GI) / Slash / Vinyl LP, Album, Repress / 1979</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/855836" target="_blank" rel="noopener noreferrer">Gloom / 撲殺精神破綻者 = Vokusatsu Seisin Hatansha / Crust War / Vinyl LP, Compilation / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2678857" target="_blank" rel="noopener noreferrer">Goblin, Goblin / Suspiria (Musiche Dalla Colonna Sonora Originale Del Film) = サスペリア / Odeon / Vinyl LP, Album, Stereo / 1977</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1221454" target="_blank" rel="noopener noreferrer">Ildjarn / Strength And Anger / Northern Heritage / 2x Vinyl LP, Limited Edition, Reissue / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3014981" target="_blank" rel="noopener noreferrer">Indigesti / Osservati Dall&#x27;Inganno / TVOR On Vinyl / Vinyl LP, Album, Repress / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4101242" target="_blank" rel="noopener noreferrer">Infest / Slave / Deep Six Records, Draw Blank Records / Vinyl 12&quot;, 45 RPM, Album, Reissue</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8701236" target="_blank" rel="noopener noreferrer">Iron Lung / Life. Iron Lung. Death. / Iron Lung Records / Vinyl 12&quot;, 45 RPM, Album, Remastered, Test Pressing / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3151418" target="_blank" rel="noopener noreferrer">Iron Lung / Live At Supersonic July 25 2009 / Capsule / Vinyl LP / 2010</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1757812" target="_blank" rel="noopener noreferrer">Jezus And The Gospelfuckers, Agent Orange / Couldn&#x27;t Care Less / Agent Orange / Kangaroo Records / Vinyl LP, Compilation / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12697404" target="_blank" rel="noopener noreferrer">John Carpenter / Halloween (Original Motion Picture Soundtrack) / Death Waltz Recording Company / Vinyl LP, Reissue, Mono / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12605165" target="_blank" rel="noopener noreferrer">John Carpenter, Cody Carpenter, Daniel Davies / Halloween (Original Motion Picture Soundtrack) / Sacred Bones Records / Vinyl LP, Album, Limited Edition / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/670307" target="_blank" rel="noopener noreferrer">Keith Emerson / Inferno (Original Soundtrack) / Barclay / Vinyl LP, Album / 1980</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/14824306" target="_blank" rel="noopener noreferrer">King Krule / Man Alive! / True Panther Sounds, Matador / Vinyl LP, Album, Limited Edition; Flexi-disc 45 RPM, Single Sided; All Media Limited Edition / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9232708" target="_blank" rel="noopener noreferrer">Latishia&#x27;s Skull Drawing / Romanticized / Iron Lung Records / Vinyl 12&quot;, 45 RPM / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10287534" target="_blank" rel="noopener noreferrer">Lebenden Toten / Static! / Iron Lung Records / Vinyl 12&quot;, 45 RPM, Single Sided, Numbered, Test Pressing / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3741011" target="_blank" rel="noopener noreferrer">Look Back And Laugh / Look Back And Laugh / Lengua Armada Discos / Vinyl 12&quot;, Album, 45 RPM, Limited Edition / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8082846" target="_blank" rel="noopener noreferrer">Manuel De Sica / Dellamorte Dellamore (Original Motion Picture Soundtrack) / Lunaris Records / 2x Vinyl LP, 45 RPM, Limited Edition, Remastered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/471752" target="_blank" rel="noopener noreferrer">Meat Puppets / Meat Puppets / SST Records, Thermidor / Vinyl 12&quot;, 45 RPM, Album / 1982</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1234509" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / Resist The New Way / Vermiform / Vinyl LP, Album, Limited Edition / 1999</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1061548" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project / The Very Best Of Men&#x27;s Recovery Project / Load Records / 2x Vinyl LP, Compilation / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/926755" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project, Sinking Body / Grappling With The Homonids / Vermiform / Vinyl LP / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/926755" target="_blank" rel="noopener noreferrer">Men&#x27;s Recovery Project, Sinking Body / Grappling With The Homonids / Vermiform / Vinyl LP / 1998</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/9443219" target="_blank" rel="noopener noreferrer">Merciless / The Awakening / Osmose Productions / Vinyl LP, Album, Limited Edition, Reissue / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4208610" target="_blank" rel="noopener noreferrer">Miles Davis / Birth Of The Cool / Capitol Records / Vinyl LP, Album, Compilation, Reissue / 1975</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/16284237" target="_blank" rel="noopener noreferrer">Minor Threat / Minor Threat / Dischord Records / Vinyl LP, Compilation, Repress</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3866613" target="_blank" rel="noopener noreferrer">Mütiilation / Remains Of A Ruined, Dead, Cursed Soul / Dark Adversary Productions / Vinyl LP, Album, Reissue, Limited Edition / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3581815" target="_blank" rel="noopener noreferrer">Mütiilation / Vampires Of Black Imperial Blood / Drakkar Productions / 2x Vinyl LP, 45 RPM, Album, Reissue / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11094679" target="_blank" rel="noopener noreferrer">National Philharmonic Orchestra / Music Excerpts From &quot;The Exorcist&quot; / Waxwork Records / Vinyl LP, Album, Deluxe Edition, Remastered / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1352093" target="_blank" rel="noopener noreferrer">Nig-Heist / Snort My Load / Thermidor / Vinyl LP, Album / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/761407" target="_blank" rel="noopener noreferrer">No Trend / Teen Love / No Trend Records / Vinyl 12&quot;, 45 RPM, EP / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10090773" target="_blank" rel="noopener noreferrer">No Trend / Tritonian Nash - Vegas Polyester Complex / Touch And Go / Vinyl LP, Album, Test Pressing / 1987</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1570422" target="_blank" rel="noopener noreferrer">Peter Frohmader, Nekropolis / Musik Aus Dem Schattenreich / Not On Label (Nekropolis (4) Self-released) / Vinyl LP, Stereo / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4432010" target="_blank" rel="noopener noreferrer">Poison Idea / Dutch Courage / Bitzcore / Vinyl LP, Album / 1991</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/463458" target="_blank" rel="noopener noreferrer">Poison Idea / Record Collectors Are Pretentious Assholes / Bitzcore / Vinyl LP, Reissue / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/787179" target="_blank" rel="noopener noreferrer">Raionbashi / Kollekte / Hanson Records / Vinyl LP, Limited Edition / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2636925" target="_blank" rel="noopener noreferrer">Rorschach / Live In Italy 6/18/92 / Gern Blandsten / Vinyl LP, Album, Limited Edition, Numbered / 2001</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/565840" target="_blank" rel="noopener noreferrer">Rudimentary Peni / Cacophony / Outer Himalayan Records, Outer Himalayan Records / Vinyl LP, Album / 1988</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/403999" target="_blank" rel="noopener noreferrer">Rudimentary Peni / Echoes Of Anguish / Outer Himalayan Records / Vinyl 12&quot;, EP, 45 RPM / 1997</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/380833" target="_blank" rel="noopener noreferrer">Rudimentary Peni / The E.P.&#x27;s Of R.P. / Corpus Christi / Vinyl LP, Compilation / 1987</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1031045" target="_blank" rel="noopener noreferrer">S.O.B.階段 / Noise Violence And Destroy / Alchemy Records (2) / Vinyl LP / 1988</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1055826" target="_blank" rel="noopener noreferrer">Saccharine Trust / Paganicons / SST Records, SST Records / Vinyl 12&quot;, 45 RPM / 1981</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/488171" target="_blank" rel="noopener noreferrer">Samhain / November-Coming-Fire / Plan 9, Caroline Records / Vinyl LP, Album / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13664812" target="_blank" rel="noopener noreferrer">Seviss / Et Pleure Le Bâtard... / Drakkar Productions / Vinyl 12&quot;, 45 RPM, Limited Edition, Reissue, Remastered / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13908951" target="_blank" rel="noopener noreferrer">Siege / Drop Dead - Complete Discography / F.O.A.D. Records / 2x Vinyl LP, 45 RPM, Compilation, Limited Edition / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1725782" target="_blank" rel="noopener noreferrer">Soft Machine / The Soft Machine / Probe, Probe / Vinyl LP, Album / 1968</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2442515" target="_blank" rel="noopener noreferrer">Sovereign / The Wolf / Mutilation Records / Vinyl LP, Album / 2002</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12333285" target="_blank" rel="noopener noreferrer">Spectral Voice / Eroded Corridors Of Unbeing / Dark Descent Records / Vinyl LP, Album, Reissue / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1752264" target="_blank" rel="noopener noreferrer">Tar Babies / Face The Music / Bone Air / Vinyl 12&quot;, 45 RPM, EP / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1752264" target="_blank" rel="noopener noreferrer">Tar Babies / Face The Music / Bone Air / Vinyl 12&quot;, 45 RPM, EP / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/803311" target="_blank" rel="noopener noreferrer">The Boneless Ones / Skate For The Devil / Boner Records / Vinyl LP, Album / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1909424" target="_blank" rel="noopener noreferrer">The Chameleons / Strange Times / Geffen Records / Vinyl LP, Album; Vinyl LP, Album, Limited Edition / 1986</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1686544" target="_blank" rel="noopener noreferrer">The Residents / The Third Reich &#x27;N&#x27; Roll / Ralph Records / Vinyl LP, Album, Reissue, Repress / 1979</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6150416" target="_blank" rel="noopener noreferrer">Totalitär, Disclose / Disclose / Totalitär - Split LP / Your Own Jailer Records / Vinyl LP, 45 RPM, White Label / 2001</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/15289462" target="_blank" rel="noopener noreferrer">United Mutation / Dark Self Image / Radio Raheem / Vinyl LP, 45 RPM, Compilation, Remastered / 2020</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2125585" target="_blank" rel="noopener noreferrer">United Mutation / Freaks Out / Bitzcore / Vinyl LP, Compilation / 1989</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12829733" target="_blank" rel="noopener noreferrer">Unknown Artist / Night Of The Living Dead (Original Motion Picture Soundtrack) / Waxwork Records / 2x Vinyl 12&quot;, 45 RPM, Limited Edition, Reissue, Remastered / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/583503" target="_blank" rel="noopener noreferrer">Various / International P.E.A.C.E. Benefit Compilation / R Radical Records / 2x Vinyl LP, Compilation / 1984</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/729858" target="_blank" rel="noopener noreferrer">Various / Philly Hardcore Compilation - Get Off My Back (We&#x27;re Doing It Ourselves) / Red Music / Vinyl LP, Compilation / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1576139" target="_blank" rel="noopener noreferrer">Various / The Time Of Hell / Game Of The Arseholes / Vinyl LP, Compilation / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1119476" target="_blank" rel="noopener noreferrer">Various / They Pelted Us With Rocks And Garbage / After Hours Records / Vinyl LP, Compilation / 1985</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/920240" target="_blank" rel="noopener noreferrer">Vile / Solution / Not On Label (Vile (2) Self-released) / Vinyl LP, Album / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1750193" target="_blank" rel="noopener noreferrer">Vile / Solution / Parts Unknown Records / Vinyl LP, Album, Reissue / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1750193" target="_blank" rel="noopener noreferrer">Vile / Solution / Parts Unknown Records / Vinyl LP, Album, Reissue / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/11568764" target="_blank" rel="noopener noreferrer">Vile Gash / Nightmare In A Damaged Brain / Youth Attack / Vinyl LP, 45 RPM, Album / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/4375342" target="_blank" rel="noopener noreferrer">Von / Satanic Blood Angel / Nuclear War Now! Productions / 2x Vinyl LP, Compilation, Picture Disc, Reissue / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/598461" target="_blank" rel="noopener noreferrer">Vorkriegsphase / Auf In Den Tod / Rock-O-Rama Records, Rock-O-Rama Records / Vinyl LP, Album / 1983</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/20210449" target="_blank" rel="noopener noreferrer">Vorkriegsphase / Demos 1984 &amp; 1985 / Vorkriegsphase Records / Vinyl LP, Compilation, Unofficial Release / 2021</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13161051" target="_blank" rel="noopener noreferrer">Wagner Ödegård / Om Domedag Och De Femton Järtekn / Klaxon / Vinyl LP, Album, Limited Edition / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1672388" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Zulu / Wrangler Brutes Records, Wrangler Brutes Records / Vinyl LP, Album / 2004</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1503428" target="_blank" rel="noopener noreferrer">Year Future / Year Future / Gold Standard Laboratories / Vinyl 12&quot;, 45 RPM / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/378603" target="_blank" rel="noopener noreferrer">Youth Of Today / Break Down The Walls / Revelation Records (8) / Vinyl LP, Album, Reissue / 1988</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>CD</strong></li>
+            <li class="meta">4 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/32772852" target="_blank" rel="noopener noreferrer">Angkor Vat / A Pulse Beyond Nothing / Dark Hidden Productions / CD Album, Reissue / 2024</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8666294" target="_blank" rel="noopener noreferrer">Blackgoat, Goatworshipper / The Blackgoat Mass / Deathrash Armageddon / CD Album / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1120681" target="_blank" rel="noopener noreferrer">Exhumed Corpse / Unmarked Grave / With Intent Records / CDr Limited Edition / 2008</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2963674" target="_blank" rel="noopener noreferrer">Goatworshipper / Blackgoat Harshnoise / Smell The Stench / CDr Reissue</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>Cassette</strong></li>
+            <li class="meta">47 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5398379" target="_blank" rel="noopener noreferrer">AJAX / Bleach For Breakfast / Not On Label (Ajax (21) Self-released) / Cassette / 2013</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1548560" target="_blank" rel="noopener noreferrer">Black Majesty / Baphe Metis / Not On Label (Black Majesty (2) Self-released) / Cassette Single Sided / 2007</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5340601" target="_blank" rel="noopener noreferrer">Bone Awl / All Has Red / Klaxon / Cassette Reissue / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3611697" target="_blank" rel="noopener noreferrer">Cadaver Dog / Cadaver Dog / Youth Attack / Cassette EP, Limited Edition / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12847044" target="_blank" rel="noopener noreferrer">Cadaver Dog / Dying Breed + Blunt Force Trauma / Youth Attack / Cassette Compilation / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2010239" target="_blank" rel="noopener noreferrer">Cirrhus / Demo 2008 / Klaxon / Cassette Limited Edition / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3570613" target="_blank" rel="noopener noreferrer">Cirrhus / Promo 2012 / CW Productions / Cassette Promo / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6105207" target="_blank" rel="noopener noreferrer">City Hunter / City Hunter / Blackout Rage / Cassette Limited Edition, Repress / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13206337" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Blackout Rage / Cassette Album, Repress / 2019</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/12771671" target="_blank" rel="noopener noreferrer">City Hunter / Deep Blood / Blackout Rage / Cassette Album, Limited Edition / 2018</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8581247" target="_blank" rel="noopener noreferrer">City Hunter / Knife Protocol / Blackout Rage / Cassette Limited Edition, Numbered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8431453" target="_blank" rel="noopener noreferrer">City Hunter / Knife Protocol / Blackout Rage / Cassette Single Sided, Limited Edition, Numbered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3611713" target="_blank" rel="noopener noreferrer">Civilized / Negative Reflection / Youth Attack / Cassette EP, Limited Edition / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8450657" target="_blank" rel="noopener noreferrer">Creep Stare / Creep Stare / Blackout Rage / Cassette Limited Edition, Numbered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8450657" target="_blank" rel="noopener noreferrer">Creep Stare / Creep Stare / Blackout Rage / Cassette Limited Edition, Numbered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8818429" target="_blank" rel="noopener noreferrer">Creep Stare / Creep Stare / Blackout Rage / Cassette Numbered / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6669950" target="_blank" rel="noopener noreferrer">Disclose / Crime / Not On Label / Cassette Single Sided / 1992</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3211314" target="_blank" rel="noopener noreferrer">Disclose / Demo &amp; Live &#x27;92 / Japankore / Cassette Compilation / 1993</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3205469" target="_blank" rel="noopener noreferrer">Disclose / Fear Of The War / Japankore, Crust Records / Cassette Single Sided, Limited Edition, Numbered / 1994</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8136957" target="_blank" rel="noopener noreferrer">Disclose / No More Pain / Confusion &amp; Phobia / Cassette Compilation, Unofficial Release</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5596644" target="_blank" rel="noopener noreferrer">Disclose / Studio Trax (&#x27;93 - &#x27;95) / Insane Society Records / Cassette Compilation / 1997</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6670040" target="_blank" rel="noopener noreferrer">Disclose / The Best Of Disclose &#x27;93-&#x27;01 / Black Konflik Records / Cassette Compilation / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/896869" target="_blank" rel="noopener noreferrer">Disclose / The Sound Of Disaster / Game Of The Arseholes, Distort Label Records / Cassette Limited Edition / 2003</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3016086" target="_blank" rel="noopener noreferrer">Disclose / Yesterday&#x27;s Fairytale, Tomorrow&#x27;s Nightmare / Out Of Control Records (3), Psychotherapy Records / Cassette / 2006</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/13817189" target="_blank" rel="noopener noreferrer">Disclose, Wind Of Pain / Disclose / Wind Of Pain / Abnormal Tapes / Cassette Limited Edition, Numbered, Repress / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10560653" target="_blank" rel="noopener noreferrer">Golden Dawn / Rehearsal 1994 / Seedstock Records / Cassette Limited Edition / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5710230" target="_blank" rel="noopener noreferrer">Graveyard Wanderers / Night Shifting / Ascetic House / Cassette Album / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1744938" target="_blank" rel="noopener noreferrer">Hiver Noir / Lethal Beings&#x27; Muzik / Drakkar Productions / Cassette Limited Edition, Numbered / 2005</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/20818708" target="_blank" rel="noopener noreferrer">Ingrown / 2012 / Curtain Fire / Cassette Single Sided / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3614077" target="_blank" rel="noopener noreferrer">Ingrown / Ingrown / Not On Label (Ingrown (3) Self-released) / Cassette / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/1571370" target="_blank" rel="noopener noreferrer">Kenji Siratori / Jyubaku / Satan&#x27;s Din / Cassette Single Sided, Limited Edition / 2008</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/5090887" target="_blank" rel="noopener noreferrer">Lascowiec / Frostwinds Of The Apocalypse / Werewolf Promotion, Brotherhood Of Light / Cassette Album, Limited Edition, Numbered / 2013</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6900749" target="_blank" rel="noopener noreferrer">Lascowiec / Winds Of Victory / Werewolf Promotion / Cassette Album, Limited Edition, Numbered / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/7131147" target="_blank" rel="noopener noreferrer">Latishia&#x27;s Skull Drawing / Demo / Cult Maternal / Cassette / 2015</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/7687560" target="_blank" rel="noopener noreferrer">Latishia&#x27;s Skull Drawing / WMASS Hole / Cult Maternal / Cassette / 2015</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10064770" target="_blank" rel="noopener noreferrer">Moenen Of Xezbeth / Dawn Of Morbid Sorcery / Darkness Attack Records / Cassette Limited Edition, Numbered / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/8510813" target="_blank" rel="noopener noreferrer">Profanatica / The Curling Flame Of Blasphemy / Hells Headbangers / Cassette Album, Stereo / 2016</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3624664" target="_blank" rel="noopener noreferrer">Salvation / Mortality Interactions / Youth Attack / Cassette Album; DVDr / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2063229" target="_blank" rel="noopener noreferrer">SQRM / Fuck To Survive / Youth Attack / Cassette Single, Limited Edition / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2373899" target="_blank" rel="noopener noreferrer">SQRM / SQRM / Not On Label (SQRM Self-released) / Cassette Single Sided / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3605784" target="_blank" rel="noopener noreferrer">Tempe SS, Avon Ladies / Heroin Heaven / Overlords Chambermaids / Ascetic House / Cassette / 2012</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/6340621" target="_blank" rel="noopener noreferrer">Various / Blood Lust Compilation / Blackout Rage / 3x Cassette Compilation, Limited Edition / 2014</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3233053" target="_blank" rel="noopener noreferrer">Various / White Eye Of Winter Watching / Hospital Productions / 2x Cassette Compilation, Limited Edition / 2011</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3103089" target="_blank" rel="noopener noreferrer">Vatican Shadow / Pakistan Military Academy / Hospital Productions / 2x Cassette Limited Edition / 2011</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2448438" target="_blank" rel="noopener noreferrer">Volahn / Dimensiónes Del Trance Kósmico / Crepúsculo Negro / Cassette Album, Limited Edition, Numbered / 2010</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/10287025" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Denver 10/08/04 / 25 Diamonds / Cassette / 2017</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/2418630" target="_blank" rel="noopener noreferrer">Wrangler Brutes / Wrangler Brutes / Wrangler Brute Records / Cassette / 2003</a></li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="section-heading"><strong>Other</strong></li>
+            <li class="meta">2 release(s)</li>
+            <li class="spacer" aria-hidden="true"></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3910709" target="_blank" rel="noopener noreferrer">Disclose / West Coast Chainsaw Tour 2004 / Dan-Doh Records / DVD / 2009</a></li>
+            <li class="record-item"><a href="https://www.discogs.com/release/3910709" target="_blank" rel="noopener noreferrer">Disclose / West Coast Chainsaw Tour 2004 / Dan-Doh Records / DVD / 2009</a></li>
+    </ul>
+  </section>
 </main>
 </body>
 </html>
